@@ -6,31 +6,31 @@ namespace Diet
 
 	struct Sugar
 	{
-		uint total() const;
-		uint added;
+		uint total = 0;
+		uint added = 0;
 	};
 
 	struct Fats
 	{
-		uint total() const;
-		uint saturated;
-		uint trans;
-		uint poly;
-		uint mono;
+		uint total = 0;
+		uint saturated = 0;
+		uint trans = 0;
+		uint poly = 0;
+		uint mono = 0;
 	};
 
 	struct Carbohydrate
 	{
-		uint total() const;
-		uint dietryFiber;
+		uint total = 0;
+		uint dietryFiber = 0;
 		Sugar sugars;
-		uint erythitol;
+		uint erythitol = 0;
 	};
 	
 	class NutritionInfo
 	{
 	public:
-		NutritionInfo() = default;
+		NutritionInfo();
 		NutritionInfo(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein);
 		uint Calories() const;
 		Fats Fat() const;
