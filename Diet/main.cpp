@@ -1,24 +1,7 @@
 #include <iostream>
-#include "Consumed.h"
 #include "DietApp.h"
 #include <sstream>
-
-int input(std::string msg)
-{
-	int selection = 0;
-
-	do
-	{
-		std::cout << msg;
-		std::string in = "";
-		std::getline(std::cin, in);
-		std::stringstream ss(in);
-		ss >> selection;
-
-	} while (selection < 1 || selection > 2);
-
-	return selection;
-}
+#include "Util.h"
 
 int main()
 {
@@ -29,17 +12,18 @@ int main()
 	//std::cout << c.Total() << "\n\n";
 	//
 	Diet::DietApp d;
-	d.setCalorieMax(2000.0f);
+	d.SetCalorieMax(2000.0f);
 	bool running = true;
 	while (running)
 	{
 		std::cout << d << "\n\n";
 
-		int selection = input("Consume food (1)\nQuit(2)\n");
+		int selection = Util::Input("Consume food (1)\nQuit(2)\n", Util::Type::IntegerRange);
 
 		switch (selection)
 		{
 		case 1:
+			d.ConsumeFood();
 			break;
 		case 2:
 			running = false;

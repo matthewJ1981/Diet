@@ -24,10 +24,10 @@
     <ClCompile Include="FoodItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Consumed.cpp">
+    <ClCompile Include="DietApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DietApp.cpp">
+    <ClCompile Include="Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="FoodItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Consumed.h">
+    <ClInclude Include="DietApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DietApp.h">
+    <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

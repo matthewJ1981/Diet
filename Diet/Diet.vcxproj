@@ -151,17 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Consumed.cpp" />
     <ClCompile Include="DietApp.cpp" />
     <ClCompile Include="FoodItem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NutritionInfo.cpp" />
+    <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Consumed.h" />
     <ClInclude Include="DietApp.h" />
     <ClInclude Include="FoodItem.h" />
     <ClInclude Include="NutritionInfo.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

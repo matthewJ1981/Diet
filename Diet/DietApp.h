@@ -2,22 +2,25 @@
 #include <iostream>
 #include <vector>
 #include "FoodItem.h"
-#include "Consumed.h"
 
 namespace Diet
 {
 	class DietApp
 	{
 	public:
-		static void setCalorieMax(float calories);
-		static float getCalorieMax();
-		
+		static void SetCalorieMax(float calories);
+		static float GetCalorieMax();
+		void ConsumeFood();
+		Diet::NutritionInfo Total() const;
+
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
 	private:
-		static void calcMaximums(float calories);
+		static void CalcMaximums(float calories);
 
-		std::vector<Consumed> consumed;
+		std::vector<FoodItem> consumed;
 		std::vector<FoodItem> favorites;
+
+		Diet::NutritionInfo total;
 
 		static constexpr float defaultCalories = 2000.0f;
 		static float calorieMax;

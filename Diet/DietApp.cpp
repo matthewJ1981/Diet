@@ -1,17 +1,31 @@
 #include "DietApp.h"
+#include "Util.h"
 
 namespace Diet
 {
-	void DietApp::setCalorieMax(float calories)
+	void DietApp::SetCalorieMax(float calories)
 	{
-		calcMaximums(calories);
+		CalcMaximums(calories);
 	}
-	float DietApp::getCalorieMax()
+	float DietApp::GetCalorieMax()
 	{
 		return calorieMax;
 	}
 
-	void DietApp::calcMaximums(float calories)
+	void DietApp::ConsumeFood()
+	{
+		char option = Util::Input("Is this something you have eaten before? (Y/N)", Util::Type::YesNo);
+		std::cout << option << "\n";
+		//consumed.push_back(f);
+		//total += f.NutInfo();
+	}
+
+	Diet::NutritionInfo DietApp::Total() const
+	{
+		return total;
+	}
+
+	void DietApp::CalcMaximums(float calories)
 	{
 		calorieMax = calories;
 		totFatMax = int(calories / defaultCalories * 75.0f);
