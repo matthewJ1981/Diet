@@ -32,6 +32,8 @@ namespace Diet
 	public:
 		NutritionInfo();
 		NutritionInfo(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein);
+		static NutritionInfo NewInfo();
+
 		uint Calories() const;
 		Fats Fat() const;
 		uint Cholesterol() const;

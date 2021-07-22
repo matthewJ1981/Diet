@@ -18,7 +18,7 @@ int main()
 	{
 		std::cout << d << "\n\n";
 
-		int selection = Util::Input("Consume food (1)\nQuit(2)\n", Util::Type::IntegerRange);
+		int selection = Util::Input("Consume food (1)\nQuit(2)\n", 1, 2);
 
 		switch (selection)
 		{

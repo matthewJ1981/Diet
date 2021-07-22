@@ -1,5 +1,6 @@
 #include "DietApp.h"
 #include "Util.h"
+#include "FoodItem.h"
 
 namespace Diet
 {
@@ -14,11 +15,27 @@ namespace Diet
 
 	void DietApp::ConsumeFood()
 	{
-		char option = Util::Input("Is this something you have eaten before? (Y/N)", Util::Type::YesNo);
-		std::cout << option << "\n";
+		char option = Util::Input("Is this something you have eaten before? (Y/N)");
+		if (option == 'Y')
+			;
+		else
+			GetFoodInfo();
+
 		//consumed.push_back(f);
 		//total += f.NutInfo();
 	}
+
+	void DietApp::GetFoodInfo()
+	{
+		std::string name;
+		std::cout << "Name of Food? ";
+		std::getline(std::cin, name);
+
+		FoodItem f{ name, NutritionInfo::NewInfo() };
+
+		std::cout << f << "\n";
+	}
+
 
 	Diet::NutritionInfo DietApp::Total() const
 	{

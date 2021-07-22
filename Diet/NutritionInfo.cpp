@@ -1,5 +1,6 @@
 #include <iostream>
 #include "NutritionInfo.h"
+#include "Util.h"
 
 namespace Diet
 {
@@ -22,6 +23,28 @@ namespace Diet
 		carbohydrates(carbs),
 		protein(protein)
 	{}
+
+	NutritionInfo NutritionInfo::NewInfo()
+	{
+		static constexpr int min = 0;
+		static constexpr int max = 10000;
+		NutritionInfo ni;
+		ni.calories = Util::Input("Calories: ", min, max);
+		ni.fat.total = Util::Input("Total Fat: ", min, max);
+		ni.fat.saturated = Util::Input("Saturated Fat: ", min, max);
+		ni.fat.trans = Util::Input("Trans Fat: ", min, max);
+		ni.fat.poly = Util::Input("Polyunsaturated Fat: ", min, max);
+		ni.fat.mono = Util::Input("Polyunsaturated Fat: ", min, max);
+		ni.cholesterol = Util::Input("Cholesterol: ", min, max);
+		ni.sodium = Util::Input("Sodium: ", min, max);
+		ni.carbohydrates.total = Util::Input("Total Carbs: ", min, max);
+		ni.carbohydrates.dietryFiber = Util::Input("Dietry Fiber: ", min, max);
+		ni.carbohydrates.sugars.total = Util::Input("Total Sugars: ", min, max);
+		ni.carbohydrates.sugars.added = Util::Input("Added Sugars ", min, max);
+		ni.protein = Util::Input("Protein: ", min, max);
+		
+		return ni;
+	}
 
 	uint NutritionInfo::Calories() const
 	{
