@@ -19,8 +19,8 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const FoodItem& fi)
 	{
-		out << fi.Name() << "\n";
-		out << fi.NutInfo() << "\n";
+		out << "Name: " << fi.Name() << "\n";
+		out << fi.NutInfo();
 
 		return out;
 	}

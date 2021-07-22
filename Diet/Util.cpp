@@ -8,8 +8,8 @@ namespace Util
 
 		do
 		{
-			selection = InputHelper(msg, selection);
-		} while (::toupper(selection) != 'Y' && ::toupper(selection) != 'N');
+			selection = ::toupper(InputHelper(msg, selection));
+		} while (selection != 'Y' && selection != 'N');
 
 		return selection;
 	}

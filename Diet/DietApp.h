@@ -17,7 +17,7 @@ namespace Diet
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
 	private:
 		static void CalcMaximums(float calories);
-		void GetFoodInfo();
+		void NewFoodInfo();
 
 		std::vector<FoodItem> consumed;
 		std::vector<FoodItem> favorites;

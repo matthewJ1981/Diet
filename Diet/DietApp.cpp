@@ -19,21 +19,28 @@ namespace Diet
 		if (option == 'Y')
 			;
 		else
-			GetFoodInfo();
+			NewFoodInfo();
 
 		//consumed.push_back(f);
 		//total += f.NutInfo();
 	}
 
-	void DietApp::GetFoodInfo()
+	void DietApp::NewFoodInfo()
 	{
 		std::string name;
-		std::cout << "Name of Food? ";
-		std::getline(std::cin, name);
+		NutritionInfo ni;
+		do
+		{
+			std::cout << "Name of Food? ";
+			std::getline(std::cin, name);
+			ni = NutritionInfo::NewInfo();
 
-		FoodItem f{ name, NutritionInfo::NewInfo() };
+			std::cout << "\nYou entered...\n\n" << name << "\n" << ni << "\n";
+		}
+		while (Util::Input("Is this correct ? ") != 'Y');
 
-		std::cout << f << "\n";
+		total += ni;
+		consumed.emplace_back(name, ni);
 	}
 
 
@@ -56,14 +63,21 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
 	{
-		out << rhs.calorieMax << "\n";
-		out << rhs.totFatMax << "\n";
-		out << rhs.totSatFatMax << "\n";
-		out << rhs.totCholMax << "\n";
-		out << rhs.totSodMax << "\n";
-		out << rhs.totCarbMax << "\n";
-		out << rhs.totFibreMax << "\n";
-		out << rhs.totProteinMax << "\n";
+		//out << rhs.calorieMax << "\n";
+		//out << rhs.totFatMax << "\n";
+		//out << rhs.totSatFatMax << "\n";
+		//out << rhs.totCholMax << "\n";
+		//out << rhs.totSodMax << "\n";
+		//out << rhs.totCarbMax << "\n";
+		//out << rhs.totFibreMax << "\n";
+		//out << rhs.totProteinMax << "\n";
+
+		//for (const auto& f : rhs.consumed)
+		//	out << f << "\n";
+
+		out << "Total consumed: \n\n";
+		if (!rhs.consumed.empty())
+			out << rhs.total << "\n";
 
 		return out;
 	}

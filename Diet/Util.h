@@ -27,8 +27,8 @@ namespace Util
 		do
 		{
 			selection = InputHelper(msg, selection);
-			if (!selection && convertEmptyInputToLow)
-				selection = low;
+			//if (!selection && convertEmptyInputToLow)
+			//			selection = low;
 		} while (selection < low || selection > high);
 
 		return selection;

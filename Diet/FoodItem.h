@@ -8,6 +8,7 @@ namespace Diet
 	class FoodItem
 	{
 	public:
+		FoodItem() = default;
 		FoodItem(std::string name, Diet::NutritionInfo info);
 		std::string Name() const;
 		Diet::NutritionInfo NutInfo() const;

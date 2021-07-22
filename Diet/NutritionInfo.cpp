@@ -29,6 +29,7 @@ namespace Diet
 		static constexpr int min = 0;
 		static constexpr int max = 10000;
 		NutritionInfo ni;
+
 		ni.calories = Util::Input("Calories: ", min, max);
 		ni.fat.total = Util::Input("Total Fat: ", min, max);
 		ni.fat.saturated = Util::Input("Saturated Fat: ", min, max);
@@ -42,7 +43,7 @@ namespace Diet
 		ni.carbohydrates.sugars.total = Util::Input("Total Sugars: ", min, max);
 		ni.carbohydrates.sugars.added = Util::Input("Added Sugars ", min, max);
 		ni.protein = Util::Input("Protein: ", min, max);
-		
+
 		return ni;
 	}
 
