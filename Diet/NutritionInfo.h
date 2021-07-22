@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Info
+namespace Diet
 {
 	typedef unsigned int uint;
 

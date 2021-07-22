@@ -2,15 +2,15 @@
 #include <vector>
 #include "FoodItem.h"
 
-namespace Food
+namespace Diet
 {
 	class Consumed
 	{
 	public:
-		void Add(Food::FoodItem f);
-		Info::NutritionInfo Total() const;
+		void Add(Diet::FoodItem f);
+		Diet::NutritionInfo Total() const;
 	private:
-		Info::NutritionInfo total;
-		std::vector<Food::FoodItem> food;
+		Diet::NutritionInfo total;
+		std::vector<Diet::FoodItem> food;
 	};
 }

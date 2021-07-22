@@ -1,13 +1,14 @@
 #include "Consumed.h"
-namespace Food
+
+namespace Diet
 {
-	void Consumed::Add(Food::FoodItem f)
+	void Consumed::Add(Diet::FoodItem f)
 	{
 		food.push_back(f);
 		total += f.NutInfo();
 	}
 
-	Info::NutritionInfo Consumed::Total() const
+	Diet::NutritionInfo Consumed::Total() const
 	{
 		return total;
 	}

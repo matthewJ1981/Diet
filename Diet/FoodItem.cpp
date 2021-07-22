@@ -1,8 +1,8 @@
 #include "FoodItem.h"
 
-namespace Food
+namespace Diet
 {
-	FoodItem::FoodItem(std::string name, Info::NutritionInfo info)
+	FoodItem::FoodItem(std::string name, Diet::NutritionInfo info)
 		:
 		name(name),
 		info(info)
@@ -12,7 +12,7 @@ namespace Food
 		return name;
 	}
 
-	Info::NutritionInfo FoodItem::NutInfo() const
+	Diet::NutritionInfo FoodItem::NutInfo() const
 	{
 		return info;
 	}

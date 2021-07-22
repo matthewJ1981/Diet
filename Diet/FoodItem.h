@@ -3,18 +3,18 @@
 #include <iostream>
 #include "NutritionInfo.h"
 
-namespace Food
+namespace Diet
 {
 	class FoodItem
 	{
 	public:
-		FoodItem(std::string name, Info::NutritionInfo info);
+		FoodItem(std::string name, Diet::NutritionInfo info);
 		std::string Name() const;
-		Info::NutritionInfo NutInfo() const;
+		Diet::NutritionInfo NutInfo() const;
 
 		friend std::ostream& operator << (std::ostream& out, const FoodItem& fi);
 	private:
 		std::string name;
-		Info::NutritionInfo info;
+		Diet::NutritionInfo info;
 	};
 }

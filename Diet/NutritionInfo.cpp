@@ -1,7 +1,7 @@
 #include <iostream>
 #include "NutritionInfo.h"
 
-namespace Info
+namespace Diet
 {
 	uint Sugar::total() const
 	{
