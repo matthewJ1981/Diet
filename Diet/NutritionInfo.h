@@ -41,6 +41,7 @@ namespace Diet
 
 		NutritionInfo& operator +=(const NutritionInfo& rhs);
 		friend std::ostream& operator << (std::ostream& out, const NutritionInfo& ni);
+
 	private:
 
 		uint calories;
@@ -49,6 +50,7 @@ namespace Diet
 		uint sodium;
 		Carbohydrate carbohydrates;
 		uint protein;
+	
 	};
 }
 
