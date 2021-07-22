@@ -9,13 +9,17 @@ namespace Diet
 	class DietApp
 	{
 	public:
-		static void calcMaximums(float calories);
+		static void setCalorieMax(float calories);
+		static float getCalorieMax();
+		
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
 	private:
+		static void calcMaximums(float calories);
 
 		std::vector<Consumed> consumed;
 		std::vector<FoodItem> favorites;
 
+		static constexpr float defaultCalories = 2000.0f;
 		static float calorieMax;
 		static int totFatMax;
 		static int totSatFatMax;

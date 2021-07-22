@@ -2,15 +2,25 @@
 
 namespace Diet
 {
+	void DietApp::setCalorieMax(float calories)
+	{
+		calcMaximums(calories);
+	}
+	float DietApp::getCalorieMax()
+	{
+		return calorieMax;
+	}
+
 	void DietApp::calcMaximums(float calories)
 	{
-		totFatMax = int(calories / calorieMax * 75.0f);
-		totSatFatMax = int(calories / calorieMax * 20.0f);
-		totCholMax = int(calories / calorieMax * 300.0f);
-		totSodMax = int(calories / calorieMax * 240.0f);
-		totCarbMax = int(calories / calorieMax * 250.0f);
-		totFibreMax = int(calories / calorieMax * 28.0f);
-		totProteinMax = int(calories / calorieMax * 50.0f);
+		calorieMax = calories;
+		totFatMax = int(calories / defaultCalories * 75.0f);
+		totSatFatMax = int(calories / defaultCalories * 20.0f);
+		totCholMax = int(calories / defaultCalories * 300.0f);
+		totSodMax = int(calories / defaultCalories * 240.0f);
+		totCarbMax = int(calories / defaultCalories * 250.0f);
+		totFibreMax = int(calories / defaultCalories * 28.0f);
+		totProteinMax = int(calories / defaultCalories * 50.0f);
 	}
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
@@ -27,7 +37,7 @@ namespace Diet
 		return out;
 	}
 
-	float DietApp::calorieMax = 2000.0f;
+	float DietApp::calorieMax = 0.0f;
 	int DietApp::totFatMax = 0;
 	int DietApp::totSatFatMax = 0;
 	int DietApp::totCholMax = 0;
