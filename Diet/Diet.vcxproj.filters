@@ -27,6 +27,9 @@
     <ClCompile Include="Consumed.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DietApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NutritionInfo.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Consumed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DietApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -152,12 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Consumed.cpp" />
+    <ClCompile Include="DietApp.cpp" />
     <ClCompile Include="FoodItem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NutritionInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consumed.h" />
+    <ClInclude Include="DietApp.h" />
     <ClInclude Include="FoodItem.h" />
     <ClInclude Include="NutritionInfo.h" />
   </ItemGroup>
