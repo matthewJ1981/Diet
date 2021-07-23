@@ -43,6 +43,7 @@ namespace Diet
 
 		NutritionInfo& operator +=(const NutritionInfo& rhs);
 		friend std::ostream& operator << (std::ostream& out, const NutritionInfo& ni);
+		friend std::istream& operator >> (std::istream& in,  NutritionInfo& ni);
 
 	private:
 

@@ -2,10 +2,13 @@
 #include "Util.h"
 #include "FoodItem.h"
 #include <iomanip>
-#include <ios>
 
 namespace Diet
 {
+	DietApp::DietApp()
+	{
+		ReadFromFile();
+	}
 	DietApp::~DietApp()
 	{
 		WriteToFile();
@@ -87,7 +90,7 @@ namespace Diet
 		std::ofstream outFile;
 		try
 		{
-			outFile.open("consumed.txt", std::ios_base::app);
+			outFile.open("consumed.txt");
 		}
 		catch (std::exception e)
 		{
@@ -105,9 +108,87 @@ namespace Diet
 			outFile << f << "\n";
 
 		outFile.close();
+
+		try
+		{
+			outFile.open("favorites.txt");
+		}
+		catch (std::exception e)
+		{
+			std::cerr << e.what();
+			abort();
+		}
+
+		if (!outFile)
+		{
+			std::cerr << "Cannot open favorites.txt";
+			abort();
+		}
+
+		for (const auto& f : favorites)
+			outFile << f << "\n";
+
+		outFile.close();
 	}
 
+	void DietApp::ReadFromFile()
+	{
+		std::ifstream inFile;
+		try
+		{
+			inFile.open("consumed.txt");
+		}
+		catch (std::exception e)
+		{
+			std::cerr << e.what();
+			abort();
+		}
 
+		if (!inFile)
+		{
+			std::cerr << "Cannot open consumed.txt";
+			abort();
+		}
+
+		while (true)
+		{
+			FoodItem f;
+			inFile >> f;
+			if (inFile.eof())
+				break;
+			consumed.push_back(f);
+			total += f.NutInfo();
+		}
+
+		inFile.close();
+
+		try
+		{
+			inFile.open("favorites.txt");
+		}
+		catch (std::exception e)
+		{
+			std::cerr << e.what();
+			abort();
+		}
+
+		if (!inFile)
+		{
+			std::cerr << "Cannot open favorites.txt";
+			abort();
+		}
+
+		while (true)
+		{
+			FoodItem f;
+			inFile >> f;
+			if (inFile.eof())
+				break;
+			favorites.push_back(f);
+		}
+
+		inFile.close();
+	}
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
 	{

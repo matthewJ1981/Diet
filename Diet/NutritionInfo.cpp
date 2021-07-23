@@ -135,5 +135,17 @@ namespace Diet
 			return out;
 		}
 	}
+
+	std::istream& operator >> (std::istream& in, NutritionInfo& ni)
+	{
+		in >> ni.calories >> ni.fat.total >> ni.fat.saturated 
+			>> ni.fat.trans >> ni.fat.poly >> ni.fat.mono 
+			>> ni.cholesterol >> ni.sodium >> ni.carbohydrates.total 
+			>> ni.carbohydrates.dietryFiber >> ni.carbohydrates.sugars.total 
+			>> ni.carbohydrates.sugars.added >> ni.carbohydrates.erythitol 
+			>> ni.protein;
+
+		return in;
+	}
 }
 

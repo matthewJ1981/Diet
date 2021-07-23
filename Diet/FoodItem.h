@@ -14,6 +14,7 @@ namespace Diet
 		std::string Name() const;
 		Diet::NutritionInfo NutInfo() const;
 
+		friend std::istream& operator >> (std::istream& in, FoodItem& fi);
 		friend std::ostream& operator << (std::ostream& out, const FoodItem& fi);
 	private:
 		std::string name;

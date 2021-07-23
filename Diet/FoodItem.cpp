@@ -31,6 +31,12 @@ namespace Diet
 			return out;
 
 		}
-		
+	}
+
+	std::istream& operator >> (std::istream& in, FoodItem& fi)
+	{
+		in >> fi.name >> fi.info;
+
+		return in;
 	}
 }

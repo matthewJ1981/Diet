@@ -9,6 +9,7 @@ namespace Diet
 	class DietApp
 	{
 	public:
+		DietApp();
 		~DietApp();
 		static void SetCalorieMax(int calories);
 		static int GetCalorieMax();
@@ -17,6 +18,7 @@ namespace Diet
 		Diet::NutritionInfo Total() const;
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
 		void WriteToFile();
+		void ReadFromFile();
 
 	private:
 		static void CalcMaximums(int calories);
@@ -42,7 +44,7 @@ namespace Diet
 		static constexpr int defaultCalories = 2000;
 		static constexpr int defFat = 75;
 		static constexpr int defSatFat = 20;
-		static constexpr int defChol = 30;
+		static constexpr int defChol = 300;
 		static constexpr int defSod = 240;
 		static constexpr int defCarb = 250;
 		static constexpr int defFibre = 28;
