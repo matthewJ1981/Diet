@@ -19,9 +19,18 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const FoodItem& fi)
 	{
-		out << "Name: " << fi.Name() << "\n";
-		out << fi.NutInfo();
+		if (typeid(out) == typeid(std::ofstream))
+		{
+			out << fi.name << " " << fi.info;
+				return out;
+		}
+		else
+		{
+			out << "Name: " << fi.Name() << "\n";
+			out << fi.NutInfo();
+			return out;
 
-		return out;
+		}
+		
 	}
 }

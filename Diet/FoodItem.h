@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include "NutritionInfo.h"
+#include <fstream>
 
 namespace Diet
 {

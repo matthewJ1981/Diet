@@ -1,6 +1,7 @@
 #include <iostream>
 #include "NutritionInfo.h"
 #include "Util.h"
+#include <fstream>
 
 namespace Diet
 {
@@ -42,10 +43,13 @@ namespace Diet
 		ni.carbohydrates.dietryFiber = Util::Input("Dietry Fiber: ", min, max);
 		ni.carbohydrates.sugars.total = Util::Input("Total Sugars: ", min, max);
 		ni.carbohydrates.sugars.added = Util::Input("Added Sugars ", min, max);
+		ni.carbohydrates.erythitol = Util::Input("Eryhitol ", min, max);
 		ni.protein = Util::Input("Protein: ", min, max);
 
 		return ni;
 	}
+
+
 
 	uint NutritionInfo::Calories() const
 	{
@@ -99,23 +103,37 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
-		out << "Calories: " << ni.Calories() << "\n";
-		out << "Total Fat: " << ni.Fat().total << "g\n";
-		out << "  Saturated Fat: " << ni.Fat().saturated << "g\n";
-		out << "  Trans Fat: " << ni.Fat().trans << "g\n";
-		out << "  Polyunsaturated: " << ni.Fat().poly << "g\n";
-		out << "  Monounsaturated: " << ni.Fat().mono << "g\n";
-		out << "Cholesterol: " << ni.Cholesterol() << "mg\n";
-		out << "Sodium: " << ni.Sodium() << "mg\n";
-		out << "Total Carbohydrate: " << ni.Carbohydrates().total << "g\n";
-		out << "  Dietary Fibre: " << ni.Carbohydrates().dietryFiber << "g\n";
-		out << "  Total Sugars: " << ni.Carbohydrates().sugars.total << "g\n";
-		out << "    Added Sugars: " << ni.Carbohydrates().sugars.added << "g\n";
-		if (ni.Carbohydrates().erythitol)
-			out << "    Erythitol: " << ni.Carbohydrates().erythitol << "g\n";
-		out << "Protein: " << ni.Protein() << "g\n";
+		if (typeid(out) == typeid(std::ofstream))
+		{
+			out << ni.calories << " " << ni.fat.total << " " << ni.fat.saturated << " "
+				<< ni.fat.trans << " " << ni.fat.poly << " " << ni.fat.mono << " "
+				<< ni.cholesterol << " " << ni.sodium << " " << ni.carbohydrates.total << " "
+				<< ni.carbohydrates.dietryFiber << " " << ni.carbohydrates.sugars.total << " "
+				<< ni.carbohydrates.sugars.added << " " << ni.carbohydrates.erythitol << " "
+				<< ni.protein;
 
-		return out;
+			return out;
+		}
+		else
+		{
+			out << "Calories: " << ni.Calories() << "\n";
+			out << "Total Fat: " << ni.Fat().total << "g\n";
+			out << "  Saturated Fat: " << ni.Fat().saturated << "g\n";
+			out << "  Trans Fat: " << ni.Fat().trans << "g\n";
+			out << "  Polyunsaturated: " << ni.Fat().poly << "g\n";
+			out << "  Monounsaturated: " << ni.Fat().mono << "g\n";
+			out << "Cholesterol: " << ni.Cholesterol() << "mg\n";
+			out << "Sodium: " << ni.Sodium() << "mg\n";
+			out << "Total Carbohydrate: " << ni.Carbohydrates().total << "g\n";
+			out << "  Dietary Fibre: " << ni.Carbohydrates().dietryFiber << "g\n";
+			out << "  Total Sugars: " << ni.Carbohydrates().sugars.total << "g\n";
+			out << "    Added Sugars: " << ni.Carbohydrates().sugars.added << "g\n";
+			if (ni.Carbohydrates().erythitol)
+				out << "    Erythitol: " << ni.Carbohydrates().erythitol << "g\n";
+			out << "Protein: " << ni.Protein() << "g\n";
+
+			return out;
+		}
 	}
 }
 

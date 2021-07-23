@@ -2,9 +2,15 @@
 #include "Util.h"
 #include "FoodItem.h"
 #include <iomanip>
+#include <ios>
 
 namespace Diet
 {
+	DietApp::~DietApp()
+	{
+		WriteToFile();
+	}
+
 	void DietApp::SetCalorieMax(int calories)
 	{
 		CalcMaximums(calories);
@@ -74,6 +80,31 @@ namespace Diet
 	Diet::NutritionInfo DietApp::Total() const
 	{
 		return total;
+	}
+
+	void DietApp::WriteToFile()
+	{
+		std::ofstream outFile;
+		try
+		{
+			outFile.open("consumed.txt", std::ios_base::app);
+		}
+		catch (std::exception e)
+		{
+			std::cerr << e.what();
+			abort();
+		}
+		
+		if (!outFile)
+		{
+			std::cerr << "Cannot open consumed.txt";
+			abort();
+		}
+
+		for (const auto& f : consumed)
+			outFile << f << "\n";
+
+		outFile.close();
 	}
 
 

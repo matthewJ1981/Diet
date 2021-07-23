@@ -2,18 +2,22 @@
 #include <iostream>
 #include <vector>
 #include "FoodItem.h"
+#include <fstream>
 
 namespace Diet
 {
 	class DietApp
 	{
 	public:
+		~DietApp();
 		static void SetCalorieMax(int calories);
 		static int GetCalorieMax();
 		void ConsumeFood();
-		
+
 		Diet::NutritionInfo Total() const;
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
+		void WriteToFile();
+
 	private:
 		static void CalcMaximums(int calories);
 		void GetNewFood();
