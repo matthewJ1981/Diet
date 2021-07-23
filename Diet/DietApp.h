@@ -21,11 +21,12 @@ namespace Diet
 		void ReadFromFile();
 
 	private:
-		static void CalcMaximums(int calories);
 		void GetNewFood();
 		void GetFromFav();
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
+		std::ofstream OpenWrite(std::string file);
+		std::ifstream OpenRead(std::string file);
 
 		std::vector<FoodItem> consumed;
 		std::vector<FoodItem> favorites;
@@ -33,21 +34,12 @@ namespace Diet
 		Diet::NutritionInfo total;
 
 		static int calorieMax;
-		static int totFatMax;
-		static int totSatFatMax;
-		static int totCholMax;
-		static int totSodMax;
-		static int totCarbMax;
-		static int totFibreMax;
-		static int totProteinMax;
-
-		static constexpr int defaultCalories = 2000;
-		static constexpr int defFat = 75;
-		static constexpr int defSatFat = 20;
-		static constexpr int defChol = 300;
-		static constexpr int defSod = 240;
-		static constexpr int defCarb = 250;
-		static constexpr int defFibre = 28;
-		static constexpr int defProtein = 50;
+		static constexpr int totFatMax = 75;
+		static constexpr int totSatFatMax = 20;
+		static constexpr int totCholMax = 300;
+		static constexpr int totSodMax = 2400;
+		static constexpr int totCarbMax = 250;
+		static constexpr int totFibreMax = 28;
+		static constexpr int totProteinMax = 50;
 	};
 }

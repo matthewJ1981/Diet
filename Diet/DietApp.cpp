@@ -16,24 +16,14 @@ namespace Diet
 
 	void DietApp::SetCalorieMax(int calories)
 	{
-		CalcMaximums(calories);
+		calorieMax = calories;
 	}
+
 	int DietApp::GetCalorieMax()
 	{
 		return calorieMax;
 	}
 
-	void DietApp::CalcMaximums(int calories)
-	{
-		calorieMax = calories;
-		totFatMax = int(float(calories) / defaultCalories * defFat);
-		totSatFatMax = int(float(calories) / defaultCalories * defSatFat);
-		totCholMax = int(float(calories) / defaultCalories * defChol);
-		totSodMax = int(float(calories) / defaultCalories * defSod);
-		totCarbMax = int(float(calories) / defaultCalories * defCarb);
-		totFibreMax = int(float(calories) / defaultCalories * defFibre);
-		totProteinMax = int(float(calories) / defaultCalories * defProtein);
-	}
 	void DietApp::ConsumeFood()
 	{
 		char option = '\0';
@@ -85,33 +75,12 @@ namespace Diet
 		return total;
 	}
 
-	void DietApp::WriteToFile()
+	std::ofstream DietApp::OpenWrite(std::string file)
 	{
 		std::ofstream outFile;
 		try
 		{
-			outFile.open("consumed.txt");
-		}
-		catch (std::exception e)
-		{
-			std::cerr << e.what();
-			abort();
-		}
-		
-		if (!outFile)
-		{
-			std::cerr << "Cannot open consumed.txt";
-			abort();
-		}
-
-		for (const auto& f : consumed)
-			outFile << f << "\n";
-
-		outFile.close();
-
-		try
-		{
-			outFile.open("favorites.txt");
+			outFile.open(file);
 		}
 		catch (std::exception e)
 		{
@@ -121,22 +90,19 @@ namespace Diet
 
 		if (!outFile)
 		{
-			std::cerr << "Cannot open favorites.txt";
+			std::cerr << "Cannot open " + file + "\n";
 			abort();
 		}
 
-		for (const auto& f : favorites)
-			outFile << f << "\n";
-
-		outFile.close();
+		return outFile;
 	}
 
-	void DietApp::ReadFromFile()
+	std::ifstream DietApp::OpenRead(std::string file)
 	{
 		std::ifstream inFile;
 		try
 		{
-			inFile.open("consumed.txt");
+			inFile.open(file);
 		}
 		catch (std::exception e)
 		{
@@ -146,9 +112,44 @@ namespace Diet
 
 		if (!inFile)
 		{
-			std::cerr << "Cannot open consumed.txt";
+			std::cerr << "Cannot open " + file + "\n";
 			abort();
 		}
+
+		return inFile;
+	}
+	void DietApp::WriteToFile()
+	{
+		auto outFile = OpenWrite("config.txt");
+
+		for (const auto& f : consumed)
+			outFile << calorieMax << "\n";
+
+		outFile.close();
+
+		outFile = OpenWrite("consumed.txt");
+
+		for (const auto& f : consumed)
+			outFile << f << "\n";
+
+		outFile.close();
+
+		outFile = OpenWrite("favorites.txt");
+
+		for (const auto& f : favorites)
+			outFile << f << "\n";
+
+		outFile.close();
+	}
+
+	void DietApp::ReadFromFile()
+	{
+		auto inFile = OpenRead("config.txt");
+		inFile >> DietApp::calorieMax;
+
+		inFile.close();
+
+		inFile = OpenRead("consumed.txt");
 
 		while (true)
 		{
@@ -162,21 +163,7 @@ namespace Diet
 
 		inFile.close();
 
-		try
-		{
-			inFile.open("favorites.txt");
-		}
-		catch (std::exception e)
-		{
-			std::cerr << e.what();
-			abort();
-		}
-
-		if (!inFile)
-		{
-			std::cerr << "Cannot open favorites.txt";
-			abort();
-		}
+		inFile = OpenRead("favorites.txt");
 
 		while (true)
 		{
@@ -228,12 +215,5 @@ namespace Diet
 		return int(float(amount) / max * 100);
 	}
 
-	int DietApp::calorieMax = 0;
-	int DietApp::totFatMax = 0;
-	int DietApp::totSatFatMax = 0;
-	int DietApp::totCholMax = 0;
-	int DietApp::totSodMax = 0;
-	int DietApp::totCarbMax = 0;
-	int DietApp::totFibreMax = 0;
-	int DietApp:: totProteinMax = 0;
+	int DietApp::calorieMax = 2000;
 }
