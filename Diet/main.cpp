@@ -12,7 +12,7 @@ int main()
 	//std::cout << c.Total() << "\n\n";
 	//
 	Diet::DietApp d;
-	d.SetCalorieMax(2000.0f);
+	d.SetCalorieMax(2000);
 	bool running = true;
 	while (running)
 	{

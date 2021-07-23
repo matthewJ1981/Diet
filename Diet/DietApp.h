@@ -8,15 +8,16 @@ namespace Diet
 	class DietApp
 	{
 	public:
-		static void SetCalorieMax(float calories);
-		static float GetCalorieMax();
+		static void SetCalorieMax(int calories);
+		static int GetCalorieMax();
 		void ConsumeFood();
 		
 		Diet::NutritionInfo Total() const;
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
 	private:
-		static void CalcMaximums(float calories);
-		void NewFoodInfo();
+		static void CalcMaximums(int calories);
+		void GetNewFood();
+		void GetFromFav();
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
 
@@ -25,8 +26,7 @@ namespace Diet
 
 		Diet::NutritionInfo total;
 
-		static constexpr float defaultCalories = 2000.0f;
-		static float calorieMax;
+		static int calorieMax;
 		static int totFatMax;
 		static int totSatFatMax;
 		static int totCholMax;
@@ -34,5 +34,14 @@ namespace Diet
 		static int totCarbMax;
 		static int totFibreMax;
 		static int totProteinMax;
+
+		static constexpr int defaultCalories = 2000;
+		static constexpr int defFat = 75;
+		static constexpr int defSatFat = 20;
+		static constexpr int defChol = 30;
+		static constexpr int defSod = 240;
+		static constexpr int defCarb = 250;
+		static constexpr int defFibre = 28;
+		static constexpr int defProtein = 50;
 	};
 }

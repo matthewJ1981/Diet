@@ -5,28 +5,41 @@
 
 namespace Diet
 {
-	void DietApp::SetCalorieMax(float calories)
+	void DietApp::SetCalorieMax(int calories)
 	{
 		CalcMaximums(calories);
 	}
-	float DietApp::GetCalorieMax()
+	int DietApp::GetCalorieMax()
 	{
 		return calorieMax;
 	}
 
+	void DietApp::CalcMaximums(int calories)
+	{
+		calorieMax = calories;
+		totFatMax = int(float(calories) / defaultCalories * defFat);
+		totSatFatMax = int(float(calories) / defaultCalories * defSatFat);
+		totCholMax = int(float(calories) / defaultCalories * defChol);
+		totSodMax = int(float(calories) / defaultCalories * defSod);
+		totCarbMax = int(float(calories) / defaultCalories * defCarb);
+		totFibreMax = int(float(calories) / defaultCalories * defFibre);
+		totProteinMax = int(float(calories) / defaultCalories * defProtein);
+	}
 	void DietApp::ConsumeFood()
 	{
-		char option = Util::Input("Is this something you have eaten before? (Y/N)");
-		if (option == 'Y')
-			;
+		char option = '\0';
+		if (favorites.size() == 0)
+			option = 'N';
 		else
-			NewFoodInfo();
+			option = Util::Input("Is this something you have eaten before? (Y/N)");
 
-		//consumed.push_back(f);
-		//total += f.NutInfo();
+		if (option == 'Y')
+			GetFromFav();
+		else
+			GetNewFood();
 	}
 
-	void DietApp::NewFoodInfo()
+	void DietApp::GetNewFood()
 	{
 		std::string name;
 		NutritionInfo ni;
@@ -43,6 +56,18 @@ namespace Diet
 
 		total += ni;
 		consumed.emplace_back(name, ni);
+		favorites.emplace_back(name, ni);
+	}
+
+	void DietApp::GetFromFav()
+	{
+		std::cout << "Select from a list of known foods...\n\n";
+		for (uint i = 0; i < favorites.size(); ++i)
+			std::cout << favorites[i].Name() << " (" << i << ")\n";
+
+		int selection = Util::Input("Select food item: ", 0, int(favorites.size() - 1));
+		total += favorites[selection].NutInfo();
+		consumed.emplace_back(favorites[selection].Name(), favorites[selection].NutInfo());
 	}
 
 
@@ -51,35 +76,14 @@ namespace Diet
 		return total;
 	}
 
-	void DietApp::CalcMaximums(float calories)
-	{
-		calorieMax = calories;
-		totFatMax = int(calories / defaultCalories * 75.0f);
-		totSatFatMax = int(calories / defaultCalories * 20.0f);
-		totCholMax = int(calories / defaultCalories * 300.0f);
-		totSodMax = int(calories / defaultCalories * 240.0f);
-		totCarbMax = int(calories / defaultCalories * 250.0f);
-		totFibreMax = int(calories / defaultCalories * 28.0f);
-		totProteinMax = int(calories / defaultCalories * 50.0f);
-	}
+
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
 	{
-		//out << rhs.calorieMax << "\n";
-		//out << rhs.totFatMax << "\n";
-		//out << rhs.totSatFatMax << "\n";
-		//out << rhs.totCholMax << "\n";
-		//out << rhs.totSodMax << "\n";
-		//out << rhs.totCarbMax << "\n";
-		//out << rhs.totFibreMax << "\n";
-		//out << rhs.totProteinMax << "\n";
-
-		//for (const auto& f : rhs.consumed)
-		//	out << f << "\n";
 		if (!rhs.consumed.empty())
 		{
-			out << "Total consumed: \n\n";
-			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(rhs.total.Calories(), rhs.calorieMax));
+			out << "\nTotal consumed: \n\n";
+			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(rhs.total.Calories()), rhs.calorieMax));
 			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(rhs.total.Fat().total, rhs.totFatMax));
 			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(rhs.total.Fat().saturated, rhs.totSatFatMax));
 			DietApp::FormatHelper(out, "  Trans Fat:", 0);
@@ -94,6 +98,7 @@ namespace Diet
 			if (rhs.total.Carbohydrates().erythitol)
 				DietApp::FormatHelper(out, "    Erythitol:", 0);
 			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(rhs.total.Protein(), rhs.totProteinMax));
+			out << "\n";
 		}
 
 		return out;
@@ -111,7 +116,7 @@ namespace Diet
 		return int(float(amount) / max * 100);
 	}
 
-	float DietApp::calorieMax = 0.0f;
+	int DietApp::calorieMax = 0;
 	int DietApp::totFatMax = 0;
 	int DietApp::totSatFatMax = 0;
 	int DietApp::totCholMax = 0;
