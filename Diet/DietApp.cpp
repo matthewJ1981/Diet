@@ -1,6 +1,7 @@
 #include "DietApp.h"
 #include "Util.h"
 #include "FoodItem.h"
+#include <iomanip>
 
 namespace Diet
 {
@@ -38,6 +39,7 @@ namespace Diet
 			std::cout << "\nYou entered...\n\n" << name << "\n" << ni << "\n";
 		}
 		while (Util::Input("Is this correct ? ") != 'Y');
+		std::cout << "\n";
 
 		total += ni;
 		consumed.emplace_back(name, ni);
@@ -74,12 +76,39 @@ namespace Diet
 
 		//for (const auto& f : rhs.consumed)
 		//	out << f << "\n";
-
-		out << "Total consumed: \n\n";
 		if (!rhs.consumed.empty())
-			out << rhs.total << "\n";
+		{
+			out << "Total consumed: \n\n";
+			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(rhs.total.Calories(), rhs.calorieMax));
+			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(rhs.total.Fat().total, rhs.totFatMax));
+			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(rhs.total.Fat().saturated, rhs.totSatFatMax));
+			DietApp::FormatHelper(out, "  Trans Fat:", 0);
+			DietApp::FormatHelper(out, "  Polyunsaturated:", 0);
+			DietApp::FormatHelper(out, "  Monounsaturated:", 0);
+			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(rhs.total.Cholesterol(), rhs.totCholMax));
+			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(rhs.total.Sodium(), rhs.totSodMax));
+			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(rhs.total.Carbohydrates().total, rhs.totCarbMax));
+			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(rhs.total.Carbohydrates().dietryFiber, rhs.totFibreMax));
+			DietApp::FormatHelper(out, "  Total Sugars:", 0);
+			DietApp::FormatHelper(out, "    Added Sugars:", 0);
+			if (rhs.total.Carbohydrates().erythitol)
+				DietApp::FormatHelper(out, "    Erythitol:", 0);
+			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(rhs.total.Protein(), rhs.totProteinMax));
+		}
 
 		return out;
+	}
+
+	void DietApp::FormatHelper(std::ostream& out, std::string col1, int col2)
+	{
+		out << std::setw(25) << std::left << col1
+			<< std::setw(10) << std::right << col2 << "%\n";
+
+	}
+
+	int DietApp::Percentage(int amount, int max)
+	{
+		return int(float(amount) / max * 100);
 	}
 
 	float DietApp::calorieMax = 0.0f;

@@ -35,7 +35,7 @@ namespace Diet
 		ni.fat.saturated = Util::Input("Saturated Fat: ", min, max);
 		ni.fat.trans = Util::Input("Trans Fat: ", min, max);
 		ni.fat.poly = Util::Input("Polyunsaturated Fat: ", min, max);
-		ni.fat.mono = Util::Input("Polyunsaturated Fat: ", min, max);
+		ni.fat.mono = Util::Input("Monounsaturated Fat: ", min, max);
 		ni.cholesterol = Util::Input("Cholesterol: ", min, max);
 		ni.sodium = Util::Input("Sodium: ", min, max);
 		ni.carbohydrates.total = Util::Input("Total Carbs: ", min, max);
@@ -80,13 +80,16 @@ namespace Diet
 	NutritionInfo& NutritionInfo::operator += (const NutritionInfo& rhs)
 	{
 		calories += rhs.calories;
+		fat.total += rhs.fat.total;
 		fat.saturated += rhs.fat.saturated;
 		fat.trans += rhs.fat.trans;
 		fat.poly += rhs.fat.poly;
 		fat.mono += rhs.fat.mono;
 		cholesterol += rhs.cholesterol;
 		sodium += rhs.sodium;
+		carbohydrates.total += rhs.carbohydrates.total;
 		carbohydrates.dietryFiber += rhs.carbohydrates.dietryFiber;
+		carbohydrates.sugars.total += rhs.carbohydrates.sugars.total;
 		carbohydrates.sugars.added += rhs.carbohydrates.sugars.added;
 		carbohydrates.erythitol += rhs.carbohydrates.erythitol;
 		protein += rhs.protein;

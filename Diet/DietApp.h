@@ -13,11 +13,12 @@ namespace Diet
 		void ConsumeFood();
 		
 		Diet::NutritionInfo Total() const;
-
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
 	private:
 		static void CalcMaximums(float calories);
 		void NewFoodInfo();
+		static void FormatHelper(std::ostream& out, std::string col1, int col2);
+		static int Percentage(int amount, int max);
 
 		std::vector<FoodItem> consumed;
 		std::vector<FoodItem> favorites;

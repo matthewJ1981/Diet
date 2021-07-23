@@ -16,7 +16,7 @@ int main()
 	bool running = true;
 	while (running)
 	{
-		std::cout << "\n" << d;
+		std::cout << d;
 
 		int selection = Util::Input("Consume food (1)\nQuit(2)\n", 1, 2);
 
