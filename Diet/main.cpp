@@ -9,6 +9,7 @@ int main()
 	bool running = true;
 	while (running)
 	{
+		d.CheckTime();
 		std::cout << d;
 		int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal(2)\nQuit(3)\n", 1, 3);
 

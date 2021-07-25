@@ -17,6 +17,7 @@ namespace Diet
 		static void SetCalorieMax(int calories);
 		static int GetCalorieMax();
 		void ConsumeFood();
+		void CheckTime();
 
 		Diet::NutritionInfo Total() const;
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);

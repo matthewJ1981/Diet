@@ -20,36 +20,41 @@ namespace Diet
 		currRunDate = CurrentDate();
 
 		if (prevRunDate != currRunDate)
-		{
 			Reset();
-			prevRunDate = currRunDate;
-		}
 	}
+
 	DietApp::~DietApp()
 	{
 		Write(consumedFile);
 		Write(favoritesFile);
 		Write(configFile);
-
 	}
 
 	void DietApp::Reset()
 	{
-		if (prevRunDate.is_not_a_date())
-			return;
-
-		std::cerr << "Reset\n";
-		Write(totalsFile);
-		total = NutritionInfo();
-		consumed.clear();
-		ClearConsumedFile();
-
+		if (!prevRunDate.is_not_a_date())
+		{
+			std::cout << "\n****Writing yesterday's total to a file and resetting what you have consumed.****\n\n";
+			Write(totalsFile);
+			total = NutritionInfo();
+			consumed.clear();
+			ClearConsumedFile();
+		}
+		prevRunDate = currRunDate;
+		startHour = 0;
 	}
+	
+	void DietApp::CheckTime()
+	{
+		auto currHour = CurrentHour();
+		if (currHour == 0 && startHour != 0)
+			Reset();
+	}
+
 	void DietApp::ClearConsumedFile()
 	{
 		auto outFile = GetOfstream(consumedFile);
 	}
-
 
 	void DietApp::SetCalorieMax(int calories)
 	{
