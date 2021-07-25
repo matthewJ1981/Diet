@@ -14,6 +14,10 @@ namespace Diet
 	public:
 		static void Go();
 	private:
+		DietApp() {}
+		DietApp(const DietApp&) = delete;
+		DietApp& operator = (const DietApp&) = delete;
+
 		static void Init();
 		static void Reset();
 
@@ -34,7 +38,12 @@ namespace Diet
 		static void ClearConsumedFile();
 
 		static void History();
-
+		static void Options();
+		static void GetCombos(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos);
+		static void PrintOptions(const std::vector<std::vector<uint>>& combos);
+		static NutritionInfo CreateFromCounts(const std::vector<int>& counts);
+		static bool NoOver100(const NutritionInfo& ni);
+		static std::vector<std::vector<int>> GetCombos();
 		static void SetCalorieMax(int calories);
 		static void CheckTime();
 		static _int64 CurrentHour();
@@ -63,5 +72,6 @@ namespace Diet
 		static _int64 startHour;
 
 		static bool started;
+		//static std::vector <std::vector<uint>> combos;
 	};
 }

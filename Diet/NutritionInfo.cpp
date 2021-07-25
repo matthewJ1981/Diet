@@ -99,6 +99,13 @@ namespace Diet
 		return *this;
 	}
 
+	const NutritionInfo NutritionInfo::operator + (const NutritionInfo& rhs)
+	{
+		NutritionInfo result = *this;
+		result += rhs;
+		return result;
+	}
+
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
 		if (typeid(out) == typeid(std::ofstream))

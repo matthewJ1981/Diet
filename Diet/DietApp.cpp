@@ -23,7 +23,7 @@ namespace Diet
 		{
 			CheckTime();
 			Print(std::cout, total);
-			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal (2)\nShow history (3)\nQuit (4)\n", 1, 4);
+			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal (2)\nShow history (3)\nOptions (4)\nQuit (5)\n", 1, 5);
 
 			switch (selection)
 			{
@@ -37,6 +37,9 @@ namespace Diet
 				History();
 				break;
 			case 4:
+				Options();
+				break;
+			case 5:
 				running = false;
 				break;
 			default:
@@ -121,21 +124,21 @@ namespace Diet
 		if (!consumed.empty())
 		{
 			out << "Total consumed: \n\n";
-			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(ni.Calories()), calorieMax));
-			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(ni.Fat().total, totFatMax));
-			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(ni.Fat().saturated, totSatFatMax));
-			DietApp::FormatHelper(out, "  Trans Fat:", 0);
-			DietApp::FormatHelper(out, "  Polyunsaturated:", 0);
-			DietApp::FormatHelper(out, "  Monounsaturated:", 0);
-			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(ni.Cholesterol(), totCholMax));
-			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(ni.Sodium(), totSodMax));
-			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(ni.Carbohydrates().total, totCarbMax));
-			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(ni.Carbohydrates().dietryFiber, totFibreMax));
-			DietApp::FormatHelper(out, "  Total Sugars:", 0);
-			DietApp::FormatHelper(out, "    Added Sugars:", 0);
+			FormatHelper(out, "Calories:", Percentage(ni.Calories(), calorieMax));
+			FormatHelper(out, "Total Fat:", Percentage(ni.Fat().total, totFatMax));
+			FormatHelper(out, "  Saturated Fat:",Percentage(ni.Fat().saturated, totSatFatMax));
+			FormatHelper(out, "  Trans Fat:", 0);
+			FormatHelper(out, "  Polyunsaturated:", 0);
+			FormatHelper(out, "  Monounsaturated:", 0);
+			FormatHelper(out, "Cholesterol:",Percentage(ni.Cholesterol(), totCholMax));
+			FormatHelper(out, "Sodium",Percentage(ni.Sodium(), totSodMax));
+			FormatHelper(out, "Total Carbohydrate:", Percentage(ni.Carbohydrates().total, totCarbMax));
+			FormatHelper(out, "  Dietary Fibre:", Percentage(ni.Carbohydrates().dietryFiber, totFibreMax));
+			FormatHelper(out, "  Total Sugars:", 0);
+			FormatHelper(out, "    Added Sugars:", 0);
 			if (ni.Carbohydrates().erythitol)
-				DietApp::FormatHelper(out, "    Erythitol:", 0);
-			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(ni.Protein(), totProteinMax));
+				FormatHelper(out, "    Erythitol:", 0);
+			FormatHelper(out, "Protein:", Percentage(ni.Protein(), totProteinMax));
 			out << "\n";
 		}
 	}
@@ -303,6 +306,101 @@ namespace Diet
 		Read(totalsFile);
 	}
 
+	void DietApp::Options()
+	{
+		std::vector<uint> amts( favorites.size() );
+		std::vector<std::vector<uint>> combos;
+		GetCombos(total, 0, amts, combos);
+
+		PrintOptions(combos);
+	}
+
+	void DietApp::GetCombos(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos)
+	{
+		if (i == favorites.size() - 1)
+		{
+			while (NoOver100(ni + favorites[i].NutInfo()))
+			{
+				ni += favorites[i].NutInfo();
+				++amts[i];
+			}
+
+			combos.push_back(amts);
+		}
+		else
+		{
+			while (NoOver100(ni))
+			{
+				GetCombos(ni, i + 1, amts, combos);
+				ni += favorites[i].NutInfo();
+				++amts[i];
+			}
+		}
+	}
+
+	NutritionInfo DietApp::CreateFromCounts(const std::vector<int>& counts)
+	{
+		NutritionInfo ni;
+		for (size_t i = 0; i < counts.size(); ++i)
+		{
+			for (int j = 0; j < counts[i]; ++j)
+			{
+				ni += favorites[i].NutInfo();
+			}
+		}
+
+		return ni;
+	}
+
+	void DietApp::PrintOptions(const std::vector<std::vector<uint>>& combos)
+	{
+		std::cout << "\n **** Options for the rest of the day **** \n\n";
+		for (const auto& amts : combos)
+		{
+			for (size_t i = 0; i < amts.size(); ++i)
+			{
+				std::cout << favorites[i].Name() << ": ";
+				std::cout << amts[i] << "\n";
+			}
+			std::cout << "\n";
+		}
+	}
+	bool DietApp::NoOver100(const NutritionInfo& ni)
+	{
+		return (Percentage(ni.Calories(), calorieMax) <= 100) &&
+			   (Percentage(ni.Fat().total, totFatMax) <= 100) &&
+			   (Percentage(ni.Fat().saturated, totSatFatMax) <= 100) &&
+			   (Percentage(ni.Cholesterol(), totCholMax) <= 100) &&
+			   (Percentage(ni.Sodium(), totSodMax) <= 100) &&
+			   (Percentage(ni.Carbohydrates().total, totCarbMax) <= 100) &&
+			   (Percentage(ni.Carbohydrates().dietryFiber, totFibreMax) <= 100) &&
+			   (Percentage(ni.Protein(), totProteinMax) <= 100);
+	}
+
+	std::vector<std::vector<int>> DietApp::GetCombos()
+	{
+		std::vector<std::vector<int>> combos;
+		
+		for (size_t i = 0; i < favorites.size(); ++i)
+		{
+			NutritionInfo temp = total;
+			std::vector<int> amounts(favorites.size());
+
+			for (size_t j = i; j < favorites.size(); ++j)
+			{
+				while (NoOver100(temp + favorites[j].NutInfo()))
+				{
+					temp += favorites[j].NutInfo();
+					++amounts[j];
+				}
+			}
+
+			combos.push_back(amounts);
+		}
+
+		return combos;
+	}
+
 	void DietApp::SetCalorieMax(int calories)
 	{
 		calorieMax = calories;
@@ -339,4 +437,5 @@ namespace Diet
 	_int64 DietApp::startHour = 0;
 
 	bool DietApp::started = false;
+	//std::vector<std::vector<uint>> DietApp::combos{};
 }
