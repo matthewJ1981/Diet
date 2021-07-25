@@ -92,6 +92,7 @@ namespace Diet
 	{
 		std::string name;
 		NutritionInfo ni;
+		bool entering = true;
 		do
 		{
 			std::cout << "Name of Food? ";
@@ -100,7 +101,8 @@ namespace Diet
 
 			std::cout << "\nYou entered...\n\n" << name << "\n" << ni << "\n";
 		}
-		while (Util::Input("Is this correct ? ") != 'Y');
+		while (Util::Input("Is this correct ? ") != 'Y' && Util::Input("Try again?") == 'Y');
+
 		std::cout << "\n";
 
 		total += ni;
@@ -114,16 +116,22 @@ namespace Diet
 		for (uint i = 0; i < favorites.size(); ++i)
 			std::cout << favorites[i].Name() << " (" << i << ")\n";
 
-		int selection = Util::Input("Select food item: ", 0, int(favorites.size() - 1));
-		total += favorites[selection].NutInfo();
-		consumed.emplace_back(favorites[selection].Name(), favorites[selection].NutInfo());
+		std::cout << "Go back (" << favorites.size() << ")\n";
+		int selection = Util::Input("Select food item: ", 0, int(favorites.size()));
+		if (selection < favorites.size())
+		{
+			total += favorites[selection].NutInfo();
+			consumed.emplace_back(favorites[selection].Name(), favorites[selection].NutInfo());
+		}
 	}
 
 	void DietApp::Print(std::ostream& out, const NutritionInfo& ni)
 	{
+		std::cout << "You are aiming at consuming " << calorieMax << " calories per day.\n";
+
 		if (!consumed.empty())
 		{
-			out << "Total consumed: \n\n";
+			out << "\n****Total consumed so far today: ****\n\n";
 			FormatHelper(out, "Calories:", Percentage(ni.Calories(), calorieMax));
 			FormatHelper(out, "Total Fat:", Percentage(ni.Fat().total, totFatMax));
 			FormatHelper(out, "  Saturated Fat:",Percentage(ni.Fat().saturated, totSatFatMax));
