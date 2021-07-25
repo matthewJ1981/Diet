@@ -104,7 +104,7 @@ namespace Diet
 		while (Util::Input("Is this correct ? ") != 'Y' && Util::Input("Try again?") == 'Y');
 
 		std::cout << "\n";
-		uint servings = Util::Input("How many servings?: ", 1, 100);
+		float servings = Util::Input("How many servings?: ", 0.0f, 100.0f);
 
 		total += ni * servings;
 		consumed.push_back({ {name, ni}, servings });
@@ -120,10 +120,9 @@ namespace Diet
 		std::cout << "Go back (" << favorites.size() << ")\n";
 		uint selection = Util::Input("Select food item: ", uint(0), favorites.size());
 
-
 		if (size_t(selection) < favorites.size())
 		{
-			uint servings = Util::Input("How many servings?: ", 1, 100);
+			float servings = Util::Input("How many servings?: ", 0.0f, 100.0f);
 			total += favorites[selection].NutInfo() * servings;
 			consumed.push_back({ { favorites[selection].Name(), favorites[selection].NutInfo() }, servings });
 		}
@@ -204,8 +203,8 @@ namespace Diet
 
 		if (!inFile)
 		{
-			std::cerr << "Cannot open " + file + "\n";
-			abort();
+			GetOfstream(file);
+			inFile.open(file);
 		}
 
 		return inFile;
@@ -422,7 +421,7 @@ namespace Diet
 		return boost::posix_time::second_clock::local_time().date();
 	}
 
-	std::vector<std::pair<FoodItem, uint>> DietApp::consumed = { };
+	std::vector<std::pair<FoodItem, float>> DietApp::consumed = { };
 	std::vector<FoodItem> DietApp::favorites = {};
 	Diet::NutritionInfo DietApp::total = {};
 

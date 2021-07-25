@@ -106,33 +106,6 @@ namespace Diet
 		return result;
 	}
 
-	NutritionInfo& NutritionInfo::operator *=(const uint rhs)
-	{
-		calories *= rhs;
-		fat.total *= rhs;
-		fat.saturated *= rhs;
-		fat.trans *= rhs;
-		fat.poly *= rhs;
-		fat.mono *= rhs;
-		cholesterol *= rhs;
-		sodium *= rhs;
-		carbohydrates.total *= rhs;
-		carbohydrates.dietryFiber *= rhs;
-		carbohydrates.sugars.total *= rhs;
-		carbohydrates.sugars.added *= rhs;
-		carbohydrates.erythitol *= rhs;
-		protein += rhs;
-
-		return *this;
-	}
-
-	const NutritionInfo NutritionInfo::operator * (const uint rhs)
-	{
-		NutritionInfo result = *this;
-		result *= rhs;
-		return result;
-	}
-
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
 		//Produce different output if writing to a file

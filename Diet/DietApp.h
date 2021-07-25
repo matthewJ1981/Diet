@@ -77,7 +77,7 @@ namespace Diet
 		static _int64 CurrentHour();
 		static boost::gregorian::date CurrentDate();
 
-		static std::vector<std::pair<FoodItem, uint>> consumed;
+		static std::vector<std::pair<FoodItem, float>> consumed;
 		static std::vector<FoodItem> favorites;
 		static Diet::NutritionInfo total;
 
