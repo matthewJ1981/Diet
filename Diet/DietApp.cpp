@@ -2,24 +2,54 @@
 #include "Util.h"
 #include "FoodItem.h"
 #include <iomanip>
+#include <cstdio>
+#include <boost\date_time/posix_time/posix_time.hpp>
+
+using namespace boost::posix_time;
+using namespace boost::gregorian;
 
 namespace Diet
 {
 	DietApp::DietApp()
 	{
+		Read(consumedFile);
+		Read(favoritesFile);
+		Read(configFile);
 		
-			Read(consumedFile);
-			Read(favoritesFile);
-			Read(configFile);
+		startHour = CurrentHour();
+		currRunDate = CurrentDate();
 
+		if (prevRunDate != currRunDate)
+		{
+			Reset();
+			prevRunDate = currRunDate;
+		}
 	}
 	DietApp::~DietApp()
 	{
-			Write(consumedFile);
-			Write(favoritesFile);
-			Write(configFile);
+		Write(consumedFile);
+		Write(favoritesFile);
+		Write(configFile);
 
 	}
+
+	void DietApp::Reset()
+	{
+		if (prevRunDate.is_not_a_date())
+			return;
+
+		std::cerr << "Reset\n";
+		Write(totalsFile);
+		total = NutritionInfo();
+		consumed.clear();
+		ClearConsumedFile();
+
+	}
+	void DietApp::ClearConsumedFile()
+	{
+		auto outFile = GetOfstream(consumedFile);
+	}
+
 
 	void DietApp::SetCalorieMax(int calories)
 	{
@@ -131,13 +161,25 @@ namespace Diet
 		auto outFile = GetOfstream(file);
 
 		if (file == consumedFile)
+		{
 			for (const auto& f : consumed)
 				outFile << f << "\n";
+		}
 		else if (file == favoritesFile)
+		{
 			for (const auto& f : favorites)
 				outFile << f << "\n";
+		}
 		else if (file == configFile)
+		{
 			outFile << calorieMax << "\n";
+			outFile << prevRunDate << "\n";
+		}
+		else if (file == totalsFile)
+		{
+			outFile << prevRunDate << " ";
+			outFile << total << "\n";
+		}
 		else
 			throw std::runtime_error("Invalid filename");
 
@@ -175,11 +217,27 @@ namespace Diet
 		else if (file == configFile)
 		{
 			inFile >> DietApp::calorieMax;
+			inFile >> DietApp::prevRunDate;
+		}
+		else if (file == totalsFile)
+		{
+			//TODO
+			;
 		}
 		else
 			throw std::runtime_error("Invalid filename");
 
 		inFile.close();
+	}
+
+	_int64 DietApp::CurrentHour()
+	{
+		return second_clock::local_time().time_of_day().hours();
+	}
+
+	boost::gregorian::date DietApp::CurrentDate()
+	{
+		return boost::posix_time::second_clock::local_time().date();
 	}
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
@@ -225,4 +283,9 @@ namespace Diet
 	const std::string DietApp::favoritesFile = "favorites.txt";
 	const std::string DietApp::configFile = "config.txt";
 	const std::string DietApp::totalsFile = "totals.txt";
+	boost::gregorian::date DietApp::prevRunDate(not_a_date_time);
+	//static std::string currRunDate;
+	boost::gregorian::date DietApp::currRunDate(not_a_date_time);
+	_int64 DietApp::startHour = 0;
+
 }

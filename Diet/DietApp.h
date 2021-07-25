@@ -5,6 +5,7 @@
 #include <fstream>
 #include <chrono>
 #include <string>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace Diet
 {
@@ -19,14 +20,6 @@ namespace Diet
 
 		Diet::NutritionInfo Total() const;
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
-		void WriteConsumed();
-		void WriteFavorites();
-		void WriteTotal();
-		void WriteConfig();
-		void ReadConsumed();
-		void ReadFavorites();
-		void ReadConfig();
-		void ReadTotal();
 		void Write(std::string);
 		void Read(std::string);
 
@@ -37,7 +30,10 @@ namespace Diet
 		static int Percentage(int amount, int max);
 		std::ofstream GetOfstream(std::string file);
 		std::ifstream GetIfstream(std::string file);
-
+		static _int64 CurrentHour();
+		static boost::gregorian::date CurrentDate();
+		void Reset();
+		void ClearConsumedFile();
 		std::vector<FoodItem> consumed;
 		std::vector<FoodItem> favorites;
 
@@ -57,6 +53,11 @@ namespace Diet
 		static const std::string configFile;
 		static const std::string totalsFile;
 
-		//std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
+		static boost::gregorian::date prevRunDate;
+		//static std::string currRunDate;
+		static boost::gregorian::date currRunDate;
+		static _int64 startHour;
+		//_int64 currHour;
+
 	};
 }

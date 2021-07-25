@@ -353,3 +353,4 @@ MigrationBackup/
 
 *.exe
 *.sln
+*.vcxproj
