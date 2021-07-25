@@ -3,6 +3,7 @@
 #include <vector>
 #include "FoodItem.h"
 #include <fstream>
+#include <chrono>
 
 namespace Diet
 {
@@ -17,8 +18,14 @@ namespace Diet
 
 		Diet::NutritionInfo Total() const;
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
-		void WriteToFile();
-		void ReadFromFile();
+		void WriteConsumed();
+		void WriteFavorites();
+		void WriteTotal();
+		void WriteConfig();
+		void ReadConsumed();
+		void ReadFavorites();
+		void ReadConfig();
+		void ReadTotal();
 
 	private:
 		void GetNewFood();
@@ -41,5 +48,7 @@ namespace Diet
 		static constexpr int totCarbMax = 250;
 		static constexpr int totFibreMax = 28;
 		static constexpr int totProteinMax = 50;
+
+		//std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 	};
 }

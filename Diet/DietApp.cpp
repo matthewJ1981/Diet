@@ -7,11 +7,15 @@ namespace Diet
 {
 	DietApp::DietApp()
 	{
-		ReadFromFile();
+		ReadConfig();
+		ReadConsumed();
+		ReadFavorites();
 	}
 	DietApp::~DietApp()
 	{
-		WriteToFile();
+		WriteConfig();
+		WriteConsumed();
+		WriteFavorites();
 	}
 
 	void DietApp::SetCalorieMax(int calories)
@@ -118,23 +122,20 @@ namespace Diet
 
 		return inFile;
 	}
-	void DietApp::WriteToFile()
+
+	void DietApp::WriteConsumed()
 	{
-		auto outFile = OpenWrite("config.txt");
-
-		for (const auto& f : consumed)
-			outFile << calorieMax << "\n";
-
-		outFile.close();
-
-		outFile = OpenWrite("consumed.txt");
+		auto outFile = OpenWrite("consumed.txt");
 
 		for (const auto& f : consumed)
 			outFile << f << "\n";
 
 		outFile.close();
+	}
 
-		outFile = OpenWrite("favorites.txt");
+	void DietApp::WriteFavorites()
+	{
+		auto outFile = OpenWrite("favorites.txt");
 
 		for (const auto& f : favorites)
 			outFile << f << "\n";
@@ -142,14 +143,24 @@ namespace Diet
 		outFile.close();
 	}
 
-	void DietApp::ReadFromFile()
+	void DietApp::WriteConfig()
 	{
-		auto inFile = OpenRead("config.txt");
-		inFile >> DietApp::calorieMax;
+		auto outFile = OpenWrite("config.txt");
 
-		inFile.close();
+		for (const auto& f : consumed)
+			outFile << calorieMax << "\n";
 
-		inFile = OpenRead("consumed.txt");
+		outFile.close();
+	}
+	
+	void DietApp::WriteTotal()
+	{
+		;
+	}
+
+	void DietApp::ReadConsumed()
+	{
+		auto inFile = OpenRead("consumed.txt");
 
 		while (true)
 		{
@@ -162,8 +173,11 @@ namespace Diet
 		}
 
 		inFile.close();
+	}
 
-		inFile = OpenRead("favorites.txt");
+	void DietApp::ReadFavorites()
+	{
+		auto inFile = OpenRead("favorites.txt");
 
 		while (true)
 		{
@@ -175,6 +189,19 @@ namespace Diet
 		}
 
 		inFile.close();
+	}
+
+	void DietApp::ReadConfig()
+	{
+		auto inFile = OpenRead("config.txt");
+		inFile >> DietApp::calorieMax;
+
+		inFile.close();
+	}
+
+	void DietApp::ReadTotal()
+	{
+		;
 	}
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
