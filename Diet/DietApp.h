@@ -4,6 +4,7 @@
 #include "FoodItem.h"
 #include <fstream>
 #include <chrono>
+#include <string>
 
 namespace Diet
 {
@@ -26,14 +27,16 @@ namespace Diet
 		void ReadFavorites();
 		void ReadConfig();
 		void ReadTotal();
+		void Write(std::string);
+		void Read(std::string);
 
 	private:
 		void GetNewFood();
 		void GetFromFav();
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
-		std::ofstream OpenWrite(std::string file);
-		std::ifstream OpenRead(std::string file);
+		std::ofstream GetOfstream(std::string file);
+		std::ifstream GetIfstream(std::string file);
 
 		std::vector<FoodItem> consumed;
 		std::vector<FoodItem> favorites;
@@ -48,6 +51,11 @@ namespace Diet
 		static constexpr int totCarbMax = 250;
 		static constexpr int totFibreMax = 28;
 		static constexpr int totProteinMax = 50;
+
+		static const std::string consumedFile;
+		static const std::string favoritesFile;
+		static const std::string configFile;
+		static const std::string totalsFile;
 
 		//std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
 	};

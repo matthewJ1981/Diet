@@ -7,15 +7,18 @@ namespace Diet
 {
 	DietApp::DietApp()
 	{
-		ReadConfig();
-		ReadConsumed();
-		ReadFavorites();
+		
+			Read(consumedFile);
+			Read(favoritesFile);
+			Read(configFile);
+
 	}
 	DietApp::~DietApp()
 	{
-		WriteConfig();
-		WriteConsumed();
-		WriteFavorites();
+			Write(consumedFile);
+			Write(favoritesFile);
+			Write(configFile);
+
 	}
 
 	void DietApp::SetCalorieMax(int calories)
@@ -79,7 +82,7 @@ namespace Diet
 		return total;
 	}
 
-	std::ofstream DietApp::OpenWrite(std::string file)
+	std::ofstream DietApp::GetOfstream(std::string file)
 	{
 		std::ofstream outFile;
 		try
@@ -101,7 +104,7 @@ namespace Diet
 		return outFile;
 	}
 
-	std::ifstream DietApp::OpenRead(std::string file)
+	std::ifstream DietApp::GetIfstream(std::string file)
 	{
 		std::ifstream inFile;
 		try
@@ -123,85 +126,60 @@ namespace Diet
 		return inFile;
 	}
 
-	void DietApp::WriteConsumed()
+	void DietApp::Write(std::string file)
 	{
-		auto outFile = OpenWrite("consumed.txt");
+		auto outFile = GetOfstream(file);
 
-		for (const auto& f : consumed)
-			outFile << f << "\n";
-
-		outFile.close();
-	}
-
-	void DietApp::WriteFavorites()
-	{
-		auto outFile = OpenWrite("favorites.txt");
-
-		for (const auto& f : favorites)
-			outFile << f << "\n";
-
-		outFile.close();
-	}
-
-	void DietApp::WriteConfig()
-	{
-		auto outFile = OpenWrite("config.txt");
-
-		for (const auto& f : consumed)
+		if (file == consumedFile)
+			for (const auto& f : consumed)
+				outFile << f << "\n";
+		else if (file == favoritesFile)
+			for (const auto& f : favorites)
+				outFile << f << "\n";
+		else if (file == configFile)
 			outFile << calorieMax << "\n";
+		else
+			throw std::runtime_error("Invalid filename");
 
 		outFile.close();
 	}
-	
-	void DietApp::WriteTotal()
-	{
-		;
-	}
 
-	void DietApp::ReadConsumed()
+	void DietApp::Read(std::string file)
 	{
-		auto inFile = OpenRead("consumed.txt");
+		auto inFile = GetIfstream(file);
 
-		while (true)
+		if (file == consumedFile)
 		{
-			FoodItem f;
-			inFile >> f;
-			if (inFile.eof())
-				break;
-			consumed.push_back(f);
-			total += f.NutInfo();
+			while (true)
+			{
+				FoodItem f;
+				inFile >> f;
+				if (inFile.eof())
+					break;
+
+				consumed.push_back(f);
+				total += f.NutInfo();
+			}
 		}
-
-		inFile.close();
-	}
-
-	void DietApp::ReadFavorites()
-	{
-		auto inFile = OpenRead("favorites.txt");
-
-		while (true)
+		else if (file == favoritesFile)
 		{
-			FoodItem f;
-			inFile >> f;
-			if (inFile.eof())
-				break;
-			favorites.push_back(f);
+			while (true)
+			{
+				FoodItem f;
+				inFile >> f;
+				if (inFile.eof())
+					break;
+				favorites.push_back(f);
+			}
 		}
+		else if (file == configFile)
+		{
+			inFile >> DietApp::calorieMax;
+		}
+		else
+			throw std::runtime_error("Invalid filename");
 
 		inFile.close();
-	}
-
-	void DietApp::ReadConfig()
-	{
-		auto inFile = OpenRead("config.txt");
-		inFile >> DietApp::calorieMax;
-
-		inFile.close();
-	}
-
-	void DietApp::ReadTotal()
-	{
-		;
 	}
 
 	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
@@ -243,4 +221,8 @@ namespace Diet
 	}
 
 	int DietApp::calorieMax = 2000;
+	const std::string DietApp::consumedFile = "consumed.txt";
+	const std::string DietApp::favoritesFile = "favorites.txt";
+	const std::string DietApp::configFile = "config.txt";
+	const std::string DietApp::totalsFile = "totals.txt";
 }
