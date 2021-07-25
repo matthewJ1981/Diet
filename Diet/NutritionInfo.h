@@ -1,5 +1,8 @@
 #pragma once
 
+/**
+ *	Simple class to store the nutritional information of a food item
+ */
 namespace Diet
 {
 	typedef unsigned int uint;
@@ -32,6 +35,10 @@ namespace Diet
 	public:
 		NutritionInfo();
 		NutritionInfo(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein);
+
+		/**
+		 * Generate new NutirifionInfo object based upon user entry
+		 */
 		static NutritionInfo NewInfo();
 
 		uint Calories() const;
@@ -47,7 +54,6 @@ namespace Diet
 		friend std::istream& operator >> (std::istream& in,  NutritionInfo& ni);
 
 	private:
-
 		uint calories;
 		Fats fat;
 		uint cholesterol;

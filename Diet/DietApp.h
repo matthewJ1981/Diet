@@ -7,6 +7,7 @@
 #include <string>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
+
 namespace Diet
 {
 	class DietApp
@@ -18,17 +19,38 @@ namespace Diet
 		DietApp(const DietApp&) = delete;
 		DietApp& operator = (const DietApp&) = delete;
 
+		/**
+		 *	Read data from files and perform daily reset if necessary
+		 */
 		static void Init();
+		/**
+		 *	Write the dauly total to a file and reset consumed data
+		 */
 		static void Reset();
 
+		/**
+		 *	Simple driver to consume food
+		 */
 		static void ConsumeFood();
+		/**
+		 *	Enter new food information
+		 */
 		static void GetNewFood();
+		/**
+		 *	Get food that was been eaten previously
+		 */
 		static void GetFromFav();
 
+		/**
+		 *	Output current calorie goal and total consumed for the day as a percentage of daily value
+		 */
 		static void Print(std::ostream& out, const NutritionInfo& ni);
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
 	
+		/**
+		 *	File IO
+		 */
 		static std::ofstream GetOfstream(std::string file, bool append = false);
 		static std::ifstream GetIfstream(std::string file);
 		static void Write();
@@ -37,13 +59,19 @@ namespace Diet
 		static void Read(std::string);
 		static void ClearConsumedFile();
 
+		/**
+		  *	Read and display previous days totals
+		 */
 		static void History();
+		/**
+		* Calculate and display all food options for the rest of the day that don't take any daily value over 100%
+        */
 		static void Options();
-		static void GetCombos(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos);
+		static void Options(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos);
 		static void PrintOptions(const std::vector<std::vector<uint>>& combos);
-		static NutritionInfo CreateFromCounts(const std::vector<int>& counts);
 		static bool NoOver100(const NutritionInfo& ni);
 		static std::vector<std::vector<int>> GetCombos();
+
 		static void SetCalorieMax(int calories);
 		static void CheckTime();
 		static _int64 CurrentHour();
@@ -72,6 +100,5 @@ namespace Diet
 		static _int64 startHour;
 
 		static bool started;
-		//static std::vector <std::vector<uint>> combos;
 	};
 }

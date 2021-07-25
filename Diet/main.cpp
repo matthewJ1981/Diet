@@ -6,6 +6,5 @@
 int main()
 {
 	Diet::DietApp::Go();
-
 	return 0;
 }

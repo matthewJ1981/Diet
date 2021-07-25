@@ -3,8 +3,13 @@
 #include <iostream>
 #include <sstream>
 
+
+
 namespace Util
 {
+	/**
+	* Common functionality of Input functions
+	 */
 	template <typename T>
 	T InputHelper(std::string msg, T selection)
 	{
@@ -17,8 +22,14 @@ namespace Util
 		return selection;
 	}
 
+	/**
+	 *	Perform some input validation for yes/no input
+	 */
 	char Input(std::string msg);
 
+	/**
+	 *	Perform some input validation for integer selections
+	 */
 	template <typename T>
 	T Input(std::string msg, T low, T high, bool convertEmptyInputToLow = true)
 	{

@@ -20,6 +20,7 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const FoodItem& fi)
 	{
+		//Produce different output if writing to a file
 		if (typeid(out) == typeid(std::ofstream))
 		{
 			std::string temp = fi.name;

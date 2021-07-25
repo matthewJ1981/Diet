@@ -108,6 +108,7 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
+		//Produce different output if writing to a file
 		if (typeid(out) == typeid(std::ofstream))
 		{
 			out << ni.calories << " " << ni.fat.total << " " << ni.fat.saturated << " "

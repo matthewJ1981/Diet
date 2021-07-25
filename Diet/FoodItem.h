@@ -4,6 +4,9 @@
 #include "NutritionInfo.h"
 #include <fstream>
 
+/**
+* Simple class to store a food item.  Consists of a name and nutritional info
+*/
 namespace Diet
 {
 	class FoodItem

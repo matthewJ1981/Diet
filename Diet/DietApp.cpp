@@ -318,12 +318,12 @@ namespace Diet
 	{
 		std::vector<uint> amts( favorites.size() );
 		std::vector<std::vector<uint>> combos;
-		GetCombos(total, 0, amts, combos);
+		Options(total, 0, amts, combos);
 
 		PrintOptions(combos);
 	}
 
-	void DietApp::GetCombos(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos)
+	void DietApp::Options(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos)
 	{
 		if (i == favorites.size() - 1)
 		{
@@ -339,25 +339,11 @@ namespace Diet
 		{
 			while (NoOver100(ni))
 			{
-				GetCombos(ni, i + 1, amts, combos);
+				Options(ni, i + 1, amts, combos);
 				ni += favorites[i].NutInfo();
 				++amts[i];
 			}
 		}
-	}
-
-	NutritionInfo DietApp::CreateFromCounts(const std::vector<int>& counts)
-	{
-		NutritionInfo ni;
-		for (size_t i = 0; i < counts.size(); ++i)
-		{
-			for (int j = 0; j < counts[i]; ++j)
-			{
-				ni += favorites[i].NutInfo();
-			}
-		}
-
-		return ni;
 	}
 
 	void DietApp::PrintOptions(const std::vector<std::vector<uint>>& combos)
@@ -445,5 +431,4 @@ namespace Diet
 	_int64 DietApp::startHour = 0;
 
 	bool DietApp::started = false;
-	//std::vector<std::vector<uint>> DietApp::combos{};
 }
