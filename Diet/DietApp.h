@@ -70,7 +70,7 @@ namespace Diet
 		static void Options(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos);
 		static void PrintOptions(const std::vector<std::vector<uint>>& combos);
 		static bool NoOver100(const NutritionInfo& ni);
-		static std::vector<std::vector<int>> GetCombos();
+		/*static std::vector<std::vector<int>> GetCombos();*/
 
 		static void SetCalorieMax(int calories);
 		static void CheckTime();

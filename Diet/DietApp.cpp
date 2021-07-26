@@ -337,7 +337,7 @@ namespace Diet
 				++amts[i];
 			}
 
-			combos.push_back(amts);
+			//combos.push_back(amts);
 		}
 		else
 		{
@@ -347,20 +347,25 @@ namespace Diet
 				ni += favorites[i].NutInfo();
 				++amts[i];
 			}
+			combos.push_back(amts);
 		}
 	}
 
 	void DietApp::PrintOptions(const std::vector<std::vector<uint>>& combos)
 	{
+		std::ofstream out = GetOfstream("options.txt");
 		std::cout << "\n **** Options for the rest of the day **** \n\n";
 		for (const auto& amts : combos)
 		{
 			for (size_t i = 0; i < amts.size(); ++i)
 			{
-				std::cout << favorites[i].Name() << ": ";
-				std::cout << amts[i] << "\n";
+				//std::cout << favorites[i].Name() << ": ";
+				//std::cout << amts[i] << "\n";
+				out << favorites[i].Name() << ": ";
+				out << amts[i] << "\n";
 			}
-			std::cout << "\n";
+			//std::cout << "\n";
+			out << "\n";
 		}
 	}
 	bool DietApp::NoOver100(const NutritionInfo& ni)
@@ -375,29 +380,29 @@ namespace Diet
 			   (Percentage(ni.Protein(), totProteinMax) <= 100);
 	}
 
-	std::vector<std::vector<int>> DietApp::GetCombos()
-	{
-		std::vector<std::vector<int>> combos;
-		
-		for (size_t i = 0; i < favorites.size(); ++i)
-		{
-			NutritionInfo temp = total;
-			std::vector<int> amounts(favorites.size());
+	//std::vector<std::vector<int>> DietApp::GetCombos()
+	//{
+	//	std::vector<std::vector<int>> combos;
+	//	
+	//	for (size_t i = 0; i < favorites.size(); ++i)
+	//	{
+	//		NutritionInfo temp = total;
+	//		std::vector<int> amounts(favorites.size());
 
-			for (size_t j = i; j < favorites.size(); ++j)
-			{
-				while (NoOver100(temp + favorites[j].NutInfo()))
-				{
-					temp += favorites[j].NutInfo();
-					++amounts[j];
-				}
-			}
+	//		for (size_t j = i; j < favorites.size(); ++j)
+	//		{
+	//			while (NoOver100(temp + favorites[j].NutInfo()))
+	//			{
+	//				temp += favorites[j].NutInfo();
+	//				++amounts[j];
+	//			}
+	//		}
 
-			combos.push_back(amounts);
-		}
+	//		combos.push_back(amounts);
+	//	}
 
-		return combos;
-	}
+	//	return combos;
+	//}
 
 	void DietApp::SetCalorieMax(int calories)
 	{
