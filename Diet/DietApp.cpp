@@ -22,8 +22,8 @@ namespace Diet
 		while (running)
 		{
 			CheckTime();
-			Print(std::cout);
-			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal(2)\nQuit(3)\n", 1, 3);
+			Print(std::cout, total);
+			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal (2)\nShow history (3)\nQuit (4)\n", 1, 4);
 
 			switch (selection)
 			{
@@ -32,8 +32,11 @@ namespace Diet
 				break;
 			case 2:
 				SetCalorieMax(Util::Input("Enter new calorie goal: ", 1, 10000));
-				break;
+				break;	
 			case 3:
+				History();
+				break;
+			case 4:
 				running = false;
 				break;
 			default:
@@ -113,26 +116,26 @@ namespace Diet
 		consumed.emplace_back(favorites[selection].Name(), favorites[selection].NutInfo());
 	}
 
-	void DietApp::Print(std::ostream& out)
+	void DietApp::Print(std::ostream& out, const NutritionInfo& ni)
 	{
 		if (!consumed.empty())
 		{
-			out << "\nTotal consumed: \n\n";
-			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(total.Calories()), calorieMax));
-			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(total.Fat().total, totFatMax));
-			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(total.Fat().saturated, totSatFatMax));
+			out << "Total consumed: \n\n";
+			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(ni.Calories()), calorieMax));
+			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(ni.Fat().total, totFatMax));
+			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(ni.Fat().saturated, totSatFatMax));
 			DietApp::FormatHelper(out, "  Trans Fat:", 0);
 			DietApp::FormatHelper(out, "  Polyunsaturated:", 0);
 			DietApp::FormatHelper(out, "  Monounsaturated:", 0);
-			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(total.Cholesterol(), totCholMax));
-			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(total.Sodium(), totSodMax));
-			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(total.Carbohydrates().total, totCarbMax));
-			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(total.Carbohydrates().dietryFiber, totFibreMax));
+			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(ni.Cholesterol(), totCholMax));
+			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(ni.Sodium(), totSodMax));
+			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(ni.Carbohydrates().total, totCarbMax));
+			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(ni.Carbohydrates().dietryFiber, totFibreMax));
 			DietApp::FormatHelper(out, "  Total Sugars:", 0);
 			DietApp::FormatHelper(out, "    Added Sugars:", 0);
-			if (total.Carbohydrates().erythitol)
+			if (ni.Carbohydrates().erythitol)
 				DietApp::FormatHelper(out, "    Erythitol:", 0);
-			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(total.Protein(), totProteinMax));
+			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(ni.Protein(), totProteinMax));
 			out << "\n";
 		}
 	}
@@ -272,8 +275,17 @@ namespace Diet
 		}
 		else if (file == totalsFile)
 		{
-			//TODO
-			;
+			while (true)
+			{
+				boost::gregorian::date d;
+				NutritionInfo ni;
+				inFile >> d >> ni;
+				if (inFile.eof())
+					break;
+
+				std::cout << d << "\n";
+				Print(std::cout, ni);
+			}
 		}
 		else
 			throw std::runtime_error("Invalid filename");
@@ -288,7 +300,7 @@ namespace Diet
 
 	void DietApp::History()
 	{
-		;
+		Read(totalsFile);
 	}
 
 	void DietApp::SetCalorieMax(int calories)

@@ -21,7 +21,7 @@ namespace Diet
 		static void GetNewFood();
 		static void GetFromFav();
 
-		static void Print(std::ostream& out);
+		static void Print(std::ostream& out, const NutritionInfo& ni);
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
 	
