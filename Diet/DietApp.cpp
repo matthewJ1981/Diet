@@ -269,13 +269,13 @@ namespace Diet
 			while (true)
 			{
 				FoodItem f;
-				uint servings = 0;
+				float servings = 0;
 				inFile >> f >> servings;
 				if (inFile.eof())
 					break;
 
 				consumed.push_back({ f, servings });
-				total += f.NutInfo();
+				total += f.NutInfo() * servings;
 			}
 		}
 		else if (file == favoritesFile)
