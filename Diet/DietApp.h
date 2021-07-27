@@ -15,27 +15,30 @@ namespace Diet
 		static void Go();
 	private:
 		static void Init();
-		static void SetCalorieMax(int calories);
-		static int GetCalorieMax();
-		static void ConsumeFood();
-		static void CheckTime();
+		static void Reset();
 
-		static Diet::NutritionInfo Total();
-		static void Print(std::ostream& out);
+		static void ConsumeFood();
 		static void GetNewFood();
 		static void GetFromFav();
+
+		static void Print(std::ostream& out);
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
+	
 		static std::ofstream GetOfstream(std::string file, bool append = false);
 		static std::ifstream GetIfstream(std::string file);
-		static _int64 CurrentHour();
-		static boost::gregorian::date CurrentDate();
-		static void Reset();
-		static void ClearConsumedFile();
 		static void Write();
 		static void Read();
 		static void Write(std::string, bool append = false);
 		static void Read(std::string);
+		static void ClearConsumedFile();
+
+		static void History();
+
+		static void SetCalorieMax(int calories);
+		static void CheckTime();
+		static _int64 CurrentHour();
+		static boost::gregorian::date CurrentDate();
 
 		static std::vector<FoodItem> consumed;
 		static std::vector<FoodItem> favorites;

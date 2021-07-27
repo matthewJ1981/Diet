@@ -68,28 +68,6 @@ namespace Diet
 		startHour = 0;
 	}
 	
-	void DietApp::CheckTime()
-	{
-		auto currHour = CurrentHour();
-		if (currHour == 0 && startHour != 0)
-			Reset();
-	}
-
-	void DietApp::ClearConsumedFile()
-	{
-		auto outFile = GetOfstream(consumedFile);
-	}
-
-	void DietApp::SetCalorieMax(int calories)
-	{
-		calorieMax = calories;
-	}
-
-	int DietApp::GetCalorieMax()
-	{
-		return calorieMax;
-	}
-
 	void DietApp::ConsumeFood()
 	{
 		char option = '\0';
@@ -135,9 +113,40 @@ namespace Diet
 		consumed.emplace_back(favorites[selection].Name(), favorites[selection].NutInfo());
 	}
 
-	Diet::NutritionInfo DietApp::Total()
+	void DietApp::Print(std::ostream& out)
 	{
-		return total;
+		if (!consumed.empty())
+		{
+			out << "\nTotal consumed: \n\n";
+			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(total.Calories()), calorieMax));
+			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(total.Fat().total, totFatMax));
+			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(total.Fat().saturated, totSatFatMax));
+			DietApp::FormatHelper(out, "  Trans Fat:", 0);
+			DietApp::FormatHelper(out, "  Polyunsaturated:", 0);
+			DietApp::FormatHelper(out, "  Monounsaturated:", 0);
+			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(total.Cholesterol(), totCholMax));
+			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(total.Sodium(), totSodMax));
+			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(total.Carbohydrates().total, totCarbMax));
+			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(total.Carbohydrates().dietryFiber, totFibreMax));
+			DietApp::FormatHelper(out, "  Total Sugars:", 0);
+			DietApp::FormatHelper(out, "    Added Sugars:", 0);
+			if (total.Carbohydrates().erythitol)
+				DietApp::FormatHelper(out, "    Erythitol:", 0);
+			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(total.Protein(), totProteinMax));
+			out << "\n";
+		}
+	}
+
+	void DietApp::FormatHelper(std::ostream& out, std::string col1, int col2)
+	{
+		out << std::setw(25) << std::left << col1
+			<< std::setw(10) << std::right << col2 << "%\n";
+
+	}
+
+	int DietApp::Percentage(int amount, int max)
+	{
+		return int(float(amount) / max * 100);
 	}
 
 	std::ofstream DietApp::GetOfstream(std::string file, bool append)
@@ -184,6 +193,13 @@ namespace Diet
 		return inFile;
 	}
 
+	void DietApp::Write()
+	{
+		Write(consumedFile);
+		Write(favoritesFile);
+		Write(configFile);
+	}
+
 	void DietApp::Read()
 	{
 		Read(consumedFile);
@@ -191,12 +207,6 @@ namespace Diet
 		Read(configFile);
 	}
 
-	void DietApp::Write()
-	{
-		Write(consumedFile);
-		Write(favoritesFile);
-		Write(configFile);
-	}
 	void DietApp::Write(std::string file, bool append)
 	{
 		auto outFile = GetOfstream(file, append);
@@ -271,6 +281,28 @@ namespace Diet
 		inFile.close();
 	}
 
+	void DietApp::ClearConsumedFile()
+	{
+		auto outFile = GetOfstream(consumedFile);
+	}
+
+	void DietApp::History()
+	{
+		;
+	}
+
+	void DietApp::SetCalorieMax(int calories)
+	{
+		calorieMax = calories;
+	}
+
+	void DietApp::CheckTime()
+	{
+		auto currHour = CurrentHour();
+		if (currHour == 0 && startHour != 0)
+			Reset();
+	}
+
 	_int64 DietApp::CurrentHour()
 	{
 		return second_clock::local_time().time_of_day().hours();
@@ -279,42 +311,6 @@ namespace Diet
 	boost::gregorian::date DietApp::CurrentDate()
 	{
 		return boost::posix_time::second_clock::local_time().date();
-	}
-
-	void DietApp::Print(std::ostream& out)
-	{
-		if (!consumed.empty())
-		{
-			out << "\nTotal consumed: \n\n";
-			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(total.Calories()), calorieMax));
-			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(total.Fat().total, totFatMax));
-			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(total.Fat().saturated, totSatFatMax));
-			DietApp::FormatHelper(out, "  Trans Fat:", 0);
-			DietApp::FormatHelper(out, "  Polyunsaturated:", 0);
-			DietApp::FormatHelper(out, "  Monounsaturated:", 0);
-			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(total.Cholesterol(), totCholMax));
-			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(total.Sodium(), totSodMax));
-			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(total.Carbohydrates().total, totCarbMax));
-			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(total.Carbohydrates().dietryFiber, totFibreMax));
-			DietApp::FormatHelper(out, "  Total Sugars:", 0);
-			DietApp::FormatHelper(out, "    Added Sugars:", 0);
-			if (total.Carbohydrates().erythitol)
-				DietApp::FormatHelper(out, "    Erythitol:", 0);
-			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(total.Protein(), totProteinMax));
-			out << "\n";
-		}
-	}
-
-	void DietApp::FormatHelper(std::ostream& out, std::string col1, int col2)
-	{
-		out << std::setw(25) << std::left << col1
-			<< std::setw(10) << std::right << col2 << "%\n";
-
-	}
-
-	int DietApp::Percentage(int amount, int max)
-	{
-		return int(float(amount) / max * 100);
 	}
 
 	std::vector<FoodItem> DietApp::consumed = {};

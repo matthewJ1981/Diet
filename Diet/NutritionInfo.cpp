@@ -49,8 +49,6 @@ namespace Diet
 		return ni;
 	}
 
-
-
 	uint NutritionInfo::Calories() const
 	{
 		return calories;
