@@ -10,10 +10,31 @@ using namespace boost::gregorian;
 
 namespace Diet
 {
-	DietApp& DietApp::Start()
+	void DietApp::Go()
 	{
 		static DietApp d;
-		return d;
+		bool running = true;
+		while (running)
+		{
+			d.CheckTime();
+			std::cout << d;
+			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal(2)\nQuit(3)\n", 1, 3);
+
+			switch (selection)
+			{
+			case 1:
+				d.ConsumeFood();
+				break;
+			case 2:
+				d.SetCalorieMax(Util::Input("Enter new calorie goal: ", 1, 10000));
+				break;
+			case 3:
+				running = false;
+				break;
+			default:
+				throw std::runtime_error("Invalid input");
+			}
+		}
 	}
 
 	DietApp::DietApp()
@@ -41,7 +62,7 @@ namespace Diet
 		if (!prevRunDate.is_not_a_date())
 		{
 			std::cout << "\n****Writing yesterday's total to a file and resetting what you have consumed.****\n\n";
-			Write(totalsFile);
+			Write(totalsFile, true);
 			total = NutritionInfo();
 			consumed.clear();
 			ClearConsumedFile();
@@ -122,12 +143,12 @@ namespace Diet
 		return total;
 	}
 
-	std::ofstream DietApp::GetOfstream(std::string file)
+	std::ofstream DietApp::GetOfstream(std::string file, bool append)
 	{
 		std::ofstream outFile;
 		try
 		{
-			outFile.open(file);
+			append == true ? outFile.open(file, std::ios_base::app) : outFile.open(file);
 		}
 		catch (std::exception e)
 		{
@@ -166,9 +187,9 @@ namespace Diet
 		return inFile;
 	}
 
-	void DietApp::Write(std::string file)
+	void DietApp::Write(std::string file, bool append)
 	{
-		auto outFile = GetOfstream(file);
+		auto outFile = GetOfstream(file, append);
 
 		if (file == consumedFile)
 		{

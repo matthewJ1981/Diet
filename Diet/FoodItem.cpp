@@ -1,4 +1,5 @@
 #include "FoodItem.h"
+#include <algorithm>
 
 namespace Diet
 {
@@ -21,21 +22,22 @@ namespace Diet
 	{
 		if (typeid(out) == typeid(std::ofstream))
 		{
-			out << fi.name << " " << fi.info;
-				return out;
+			std::string temp = fi.name;
+			std::replace(temp.begin(), temp.end(), ' ', '_');
+			out << temp << " " << fi.info;
 		}
 		else
 		{
 			out << "Name: " << fi.Name() << "\n";
 			out << fi.NutInfo();
-			return out;
-
 		}
+		return out;
 	}
 
 	std::istream& operator >> (std::istream& in, FoodItem& fi)
 	{
 		in >> fi.name >> fi.info;
+		std::replace(fi.name.begin(), fi.name.end(), '_', ' ');
 
 		return in;
 	}
