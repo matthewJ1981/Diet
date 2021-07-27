@@ -12,21 +12,26 @@ namespace Diet
 {
 	void DietApp::Go()
 	{
-		static DietApp d;
+		if (started)
+			return;
+
+		started = true;
+
+		Init();
 		bool running = true;
 		while (running)
 		{
-			d.CheckTime();
-			std::cout << d;
+			CheckTime();
+			Print(std::cout);
 			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal(2)\nQuit(3)\n", 1, 3);
 
 			switch (selection)
 			{
 			case 1:
-				d.ConsumeFood();
+				ConsumeFood();
 				break;
 			case 2:
-				d.SetCalorieMax(Util::Input("Enter new calorie goal: ", 1, 10000));
+				SetCalorieMax(Util::Input("Enter new calorie goal: ", 1, 10000));
 				break;
 			case 3:
 				running = false;
@@ -35,26 +40,18 @@ namespace Diet
 				throw std::runtime_error("Invalid input");
 			}
 		}
+		Write();
 	}
 
-	DietApp::DietApp()
+	void DietApp::Init()
 	{
-		Read(consumedFile);
-		Read(favoritesFile);
-		Read(configFile);
+		Read();
 		
 		startHour = CurrentHour();
 		currRunDate = CurrentDate();
 
 		if (prevRunDate != currRunDate)
 			Reset();
-	}
-
-	DietApp::~DietApp()
-	{
-		Write(consumedFile);
-		Write(favoritesFile);
-		Write(configFile);
 	}
 
 	void DietApp::Reset()
@@ -187,6 +184,19 @@ namespace Diet
 		return inFile;
 	}
 
+	void DietApp::Read()
+	{
+		Read(consumedFile);
+		Read(favoritesFile);
+		Read(configFile);
+	}
+
+	void DietApp::Write()
+	{
+		Write(consumedFile);
+		Write(favoritesFile);
+		Write(configFile);
+	}
 	void DietApp::Write(std::string file, bool append)
 	{
 		auto outFile = GetOfstream(file, append);
@@ -271,30 +281,28 @@ namespace Diet
 		return boost::posix_time::second_clock::local_time().date();
 	}
 
-	std::ostream& operator << (std::ostream& out, const DietApp& rhs)
+	void DietApp::Print(std::ostream& out)
 	{
-		if (!rhs.consumed.empty())
+		if (!consumed.empty())
 		{
 			out << "\nTotal consumed: \n\n";
-			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(rhs.total.Calories()), rhs.calorieMax));
-			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(rhs.total.Fat().total, rhs.totFatMax));
-			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(rhs.total.Fat().saturated, rhs.totSatFatMax));
+			DietApp::FormatHelper(out, "Calories:", DietApp::Percentage(int(total.Calories()), calorieMax));
+			DietApp::FormatHelper(out, "Total Fat:", DietApp::Percentage(total.Fat().total, totFatMax));
+			DietApp::FormatHelper(out, "  Saturated Fat:", DietApp::Percentage(total.Fat().saturated, totSatFatMax));
 			DietApp::FormatHelper(out, "  Trans Fat:", 0);
 			DietApp::FormatHelper(out, "  Polyunsaturated:", 0);
 			DietApp::FormatHelper(out, "  Monounsaturated:", 0);
-			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(rhs.total.Cholesterol(), rhs.totCholMax));
-			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(rhs.total.Sodium(), rhs.totSodMax));
-			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(rhs.total.Carbohydrates().total, rhs.totCarbMax));
-			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(rhs.total.Carbohydrates().dietryFiber, rhs.totFibreMax));
+			DietApp::FormatHelper(out, "Cholesterol:", DietApp::Percentage(total.Cholesterol(), totCholMax));
+			DietApp::FormatHelper(out, "Sodium", DietApp::Percentage(total.Sodium(), totSodMax));
+			DietApp::FormatHelper(out, "Total Carbohydrate:", DietApp::Percentage(total.Carbohydrates().total, totCarbMax));
+			DietApp::FormatHelper(out, "  Dietary Fibre:", DietApp::Percentage(total.Carbohydrates().dietryFiber, totFibreMax));
 			DietApp::FormatHelper(out, "  Total Sugars:", 0);
 			DietApp::FormatHelper(out, "    Added Sugars:", 0);
-			if (rhs.total.Carbohydrates().erythitol)
+			if (total.Carbohydrates().erythitol)
 				DietApp::FormatHelper(out, "    Erythitol:", 0);
-			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(rhs.total.Protein(), rhs.totProteinMax));
+			DietApp::FormatHelper(out, "Protein:", DietApp::Percentage(total.Protein(), totProteinMax));
 			out << "\n";
 		}
-
-		return out;
 	}
 
 	void DietApp::FormatHelper(std::ostream& out, std::string col1, int col2)
@@ -313,7 +321,6 @@ namespace Diet
 	std::vector<FoodItem> DietApp::favorites = {};
 	Diet::NutritionInfo DietApp::total = {};
 
-
 	int DietApp::calorieMax = 2000;
 	const std::string DietApp::consumedFile = "consumed.txt";
 	const std::string DietApp::favoritesFile = "favorites.txt";
@@ -323,4 +330,5 @@ namespace Diet
 	boost::gregorian::date DietApp::currRunDate(not_a_date_time);
 	_int64 DietApp::startHour = 0;
 
+	bool DietApp::started = false;
 }

@@ -14,16 +14,14 @@ namespace Diet
 	public:
 		static void Go();
 	private:
-		DietApp();
-		~DietApp();	
-
+		static void Init();
 		static void SetCalorieMax(int calories);
 		static int GetCalorieMax();
 		static void ConsumeFood();
 		static void CheckTime();
 
 		static Diet::NutritionInfo Total();
-		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
+		static void Print(std::ostream& out);
 		static void GetNewFood();
 		static void GetFromFav();
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
@@ -34,6 +32,8 @@ namespace Diet
 		static boost::gregorian::date CurrentDate();
 		static void Reset();
 		static void ClearConsumedFile();
+		static void Write();
+		static void Read();
 		static void Write(std::string, bool append = false);
 		static void Read(std::string);
 
@@ -58,5 +58,7 @@ namespace Diet
 		static boost::gregorian::date prevRunDate;
 		static boost::gregorian::date currRunDate;
 		static _int64 startHour;
+
+		static bool started;
 	};
 }
