@@ -5,7 +5,8 @@
 
 int main()
 {
-	Diet::DietApp d;
+	//Diet::DietApp d;
+	Diet::DietApp& d = Diet::DietApp::Start();
 	bool running = true;
 	while (running)
 	{

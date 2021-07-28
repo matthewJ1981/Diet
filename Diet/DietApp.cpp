@@ -10,6 +10,12 @@ using namespace boost::gregorian;
 
 namespace Diet
 {
+	DietApp& DietApp::Start()
+	{
+		static DietApp d;
+		return d;
+	}
+
 	DietApp::DietApp()
 	{
 		Read(consumedFile);
@@ -111,8 +117,7 @@ namespace Diet
 		consumed.emplace_back(favorites[selection].Name(), favorites[selection].NutInfo());
 	}
 
-
-	Diet::NutritionInfo DietApp::Total() const
+	Diet::NutritionInfo DietApp::Total()
 	{
 		return total;
 	}
@@ -283,13 +288,17 @@ namespace Diet
 		return int(float(amount) / max * 100);
 	}
 
+	std::vector<FoodItem> DietApp::consumed = {};
+	std::vector<FoodItem> DietApp::favorites = {};
+	Diet::NutritionInfo DietApp::total = {};
+
+
 	int DietApp::calorieMax = 2000;
 	const std::string DietApp::consumedFile = "consumed.txt";
 	const std::string DietApp::favoritesFile = "favorites.txt";
 	const std::string DietApp::configFile = "config.txt";
 	const std::string DietApp::totalsFile = "totals.txt";
 	boost::gregorian::date DietApp::prevRunDate(not_a_date_time);
-	//static std::string currRunDate;
 	boost::gregorian::date DietApp::currRunDate(not_a_date_time);
 	_int64 DietApp::startHour = 0;
 

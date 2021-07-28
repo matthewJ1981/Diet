@@ -12,33 +12,33 @@ namespace Diet
 	class DietApp
 	{
 	public:
-		DietApp();
-		~DietApp();
+		static DietApp& Start();
 		static void SetCalorieMax(int calories);
 		static int GetCalorieMax();
-		void ConsumeFood();
-		void CheckTime();
+		static void ConsumeFood();
+		static void CheckTime();
 
-		Diet::NutritionInfo Total() const;
+		static Diet::NutritionInfo Total();
 		friend std::ostream& operator << (std::ostream& out, const DietApp& rhs);
-		void Write(std::string);
-		void Read(std::string);
-
 	private:
-		void GetNewFood();
-		void GetFromFav();
+		DietApp();
+		~DietApp();
+		static void GetNewFood();
+		static void GetFromFav();
 		static void FormatHelper(std::ostream& out, std::string col1, int col2);
 		static int Percentage(int amount, int max);
-		std::ofstream GetOfstream(std::string file);
-		std::ifstream GetIfstream(std::string file);
+		static std::ofstream GetOfstream(std::string file);
+		static std::ifstream GetIfstream(std::string file);
 		static _int64 CurrentHour();
 		static boost::gregorian::date CurrentDate();
-		void Reset();
-		void ClearConsumedFile();
-		std::vector<FoodItem> consumed;
-		std::vector<FoodItem> favorites;
+		static void Reset();
+		static void ClearConsumedFile();
+		static void Write(std::string);
+		static void Read(std::string);
 
-		Diet::NutritionInfo total;
+		static std::vector<FoodItem> consumed;
+		static std::vector<FoodItem> favorites;
+		static Diet::NutritionInfo total;
 
 		static int calorieMax;
 		static constexpr int totFatMax = 75;
@@ -55,10 +55,7 @@ namespace Diet
 		static const std::string totalsFile;
 
 		static boost::gregorian::date prevRunDate;
-		//static std::string currRunDate;
 		static boost::gregorian::date currRunDate;
 		static _int64 startHour;
-		//_int64 currHour;
-
 	};
 }
