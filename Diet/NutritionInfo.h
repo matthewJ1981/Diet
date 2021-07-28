@@ -66,7 +66,7 @@ namespace Diet
 			carbohydrates.sugars.total *= rhs;
 			carbohydrates.sugars.added *= rhs;
 			carbohydrates.erythitol *= rhs;
-			protein += rhs;
+			protein *= rhs;
 
 			return *this;
 		}
