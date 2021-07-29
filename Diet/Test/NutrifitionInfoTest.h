@@ -11,6 +11,6 @@ protected:
 	}
 
 
-	Diet::NutritionInfo ni;
+	Diet::NutritionInfo niDef;
 };
 
