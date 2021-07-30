@@ -173,24 +173,6 @@ namespace Diet
 		return *this;
 	}
 
-	//void NutritionInfo::Assign(const NutritionInfo& rhs)
-	//{
-	//	p->calories = rhs.p->calories;
-	//	p->fat.total = rhs.p->fat.total;
-	//	p->fat.saturated = rhs.p->fat.saturated;
-	//	p->fat.trans = rhs.p->fat.trans;
-	//	p->fat.poly = rhs.p->fat.poly;
-	//	p->fat.mono = rhs.p->fat.mono;
-	//	p->cholesterol = rhs.p->cholesterol;
-	//	p->sodium = rhs.p->sodium;
-	//	p->carbohydrates.total = rhs.p->carbohydrates.total;
-	//	p->carbohydrates.dietryFiber = rhs.p->carbohydrates.dietryFiber;
-	//	p->carbohydrates.sugars.total = rhs.p->carbohydrates.sugars.total;
-	//	p->carbohydrates.sugars.added = rhs.p->carbohydrates.sugars.added;
-	//	p->carbohydrates.erythitol = rhs.p->carbohydrates.erythitol;
-	//	p->protein = rhs.p->protein;
-	//}
-
 	NutritionInfo NutritionInfo::NewInfo()
 	{
 		NutritionInfo ni;
@@ -259,17 +241,17 @@ namespace Diet
 		return *p == *rhs.p;
 	}
 
-	std::ofstream& operator << (std::ofstream& out, const NutritionInfo& ni)
-	{
-		out << ni.p->calories << " " << ni.p->fat.total << " " << ni.p->fat.saturated << " "
-			<< ni.p->fat.trans << " " << ni.p->fat.poly << " " << ni.p->fat.mono << " "
-			<< ni.p->cholesterol << " " << ni.p->sodium << " " << ni.p->carbohydrates.total << " "
-			<< ni.p->carbohydrates.dietryFiber << " " << ni.p->carbohydrates.sugars.total << " "
-			<< ni.p->carbohydrates.sugars.added << " " << ni.p->carbohydrates.erythitol << " "
-			<< ni.p->protein;
+	//std::ofstream& operator << (std::ofstream& out, const NutritionInfo& ni)
+	//{
+	//	out << ni.p->calories << " " << ni.p->fat.total << " " << ni.p->fat.saturated << " "
+	//		<< ni.p->fat.trans << " " << ni.p->fat.poly << " " << ni.p->fat.mono << " "
+	//		<< ni.p->cholesterol << " " << ni.p->sodium << " " << ni.p->carbohydrates.total << " "
+	//		<< ni.p->carbohydrates.dietryFiber << " " << ni.p->carbohydrates.sugars.total << " "
+	//		<< ni.p->carbohydrates.sugars.added << " " << ni.p->carbohydrates.erythitol << " "
+	//		<< ni.p->protein;
 
-		return out;
-	}
+	//	return out;
+	//}
 
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
@@ -293,16 +275,35 @@ namespace Diet
 		return out;
 	}
 
-	std::istream& operator >> (std::istream& in, NutritionInfo& ni)
-	{
-		in >> ni.p->calories >> ni.p->fat.total >> ni.p->fat.saturated 
-			>> ni.p->fat.trans >> ni.p->fat.poly >> ni.p->fat.mono 
-			>> ni.p->cholesterol >> ni.p->sodium >> ni.p->carbohydrates.total 
-			>> ni.p->carbohydrates.dietryFiber >> ni.p->carbohydrates.sugars.total 
-			>> ni.p->carbohydrates.sugars.added >> ni.p->carbohydrates.erythitol 
-			>> ni.p->protein;
+	//std::istream& operator >> (std::istream& in, NutritionInfo& ni)
+	//{
+	//	in >> ni.p->calories >> ni.p->fat.total >> ni.p->fat.saturated 
+	//		>> ni.p->fat.trans >> ni.p->fat.poly >> ni.p->fat.mono 
+	//		>> ni.p->cholesterol >> ni.p->sodium >> ni.p->carbohydrates.total 
+	//		>> ni.p->carbohydrates.dietryFiber >> ni.p->carbohydrates.sugars.total 
+	//		>> ni.p->carbohydrates.sugars.added >> ni.p->carbohydrates.erythitol 
+	//		>> ni.p->protein;
 
-		return in;
+	//	return in;
+	//}
+	void NutritionInfo::Serialize(std::ofstream& out) const
+	{
+		out << p->calories << " " << p->fat.total << " " << p->fat.saturated << " "
+			<< p->fat.trans << " " << p->fat.poly << " " << p->fat.mono << " "
+			<< p->cholesterol << " " << p->sodium << " " << p->carbohydrates.total << " "
+			<< p->carbohydrates.dietryFiber << " " << p->carbohydrates.sugars.total << " "
+			<< p->carbohydrates.sugars.added << " " << p->carbohydrates.erythitol << " "
+			<< p->protein;
+	}
+
+	void NutritionInfo::Deserialize(std::ifstream& in)
+	{
+		in >> p->calories >> p->fat.total >> p->fat.saturated
+			>> p->fat.trans >> p->fat.poly >> p->fat.mono
+			>> p->cholesterol >> p->sodium >> p->carbohydrates.total
+			>> p->carbohydrates.dietryFiber >> p->carbohydrates.sugars.total
+			>> p->carbohydrates.sugars.added >> p->carbohydrates.erythitol
+			>> p->protein;
 	}
 }
 

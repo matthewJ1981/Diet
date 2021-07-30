@@ -240,13 +240,19 @@ namespace Diet
 		if (file == consumedFile)
 		{
 			for (const auto& f : consumed)
-				outFile << f.first << " " << f.second << "\n";
+			{
+				f.first.Serialize(outFile);
+				//outFile << f.first << " " << f.second << "\n";
+				outFile << " " << f.second;
+			}
 		}
 		else if (file == favoritesFile)
 		{
 			for (const auto& f : favorites)
 			{
-				outFile << f << "\n";
+				f.Serialize(outFile);
+				outFile << "\n";
+				//outFile << f << "\n";
 				//operator<<(outFile, f);
 				//outFile << "\n";
 			}
@@ -260,7 +266,9 @@ namespace Diet
 		else if (file == totalsFile)
 		{
 			outFile << prevRunDate << " ";
-			outFile << total << "\n";
+			total.Serialize(outFile);
+			outFile << "\n";
+			//outFile << total << "\n";
 		}
 		else
 			throw std::runtime_error("Invalid filename");
@@ -278,7 +286,9 @@ namespace Diet
 			{
 				FoodItem f;
 				float servings = 0;
-				inFile >> f >> servings;
+				f.Deserialize(inFile);
+				///inFile >> f >> servings;
+				inFile >> servings;
 				if (inFile.eof())
 					break;
 
@@ -291,7 +301,8 @@ namespace Diet
 			while (true)
 			{
 				FoodItem f;
-				inFile >> f;
+				//inFile >> f;
+				f.Deserialize(inFile);
 				if (inFile.eof())
 					break;
 				favorites.push_back(f);
@@ -308,7 +319,9 @@ namespace Diet
 			{
 				boost::gregorian::date d;
 				NutritionInfo ni;
-				inFile >> d >> ni;
+				//inFile >> d >> ni;
+				inFile >> d;
+				ni.Deserialize(inFile);
 				if (inFile.eof())
 					break;
 

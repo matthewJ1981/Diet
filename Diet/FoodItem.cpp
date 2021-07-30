@@ -26,21 +26,36 @@ namespace Diet
 		return out;
 	}
 
-	std::ofstream& operator << (std::ofstream& out, const FoodItem& fi)
+	//std::ofstream& operator << (std::ofstream& out, const FoodItem& fi)
+	//{
+	//	std::string temp = fi.name;
+	//	std::replace(temp.begin(), temp.end(), ' ', '_');
+	//	out << temp << " ";
+	//	out << fi.info;
+
+	//	return out;
+	//}
+
+	//std::istream& operator >> (std::istream& in, FoodItem& fi)
+	//{
+	//	in >> fi.name >> fi.info;
+	//	std::replace(fi.name.begin(), fi.name.end(), '_', ' ');
+
+	//	return in;
+	//}
+
+	void FoodItem::Serialize(std::ofstream& out) const
 	{
-		std::string temp = fi.name;
+		std::string temp = name;
 		std::replace(temp.begin(), temp.end(), ' ', '_');
 		out << temp << " ";
-		out << fi.info;
-
-		return out;
+		//out << fi.info;
+		info.Serialize(out);
 	}
 
-	std::istream& operator >> (std::istream& in, FoodItem& fi)
+	void FoodItem::Deserialize(std::ifstream& in)
 	{
-		in >> fi.name >> fi.info;
-		std::replace(fi.name.begin(), fi.name.end(), '_', ' ');
-
-		return in;
+		in >> name;
+		info.Deserialize(in);
 	}
 }
