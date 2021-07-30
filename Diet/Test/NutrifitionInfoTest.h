@@ -10,7 +10,6 @@ protected:
 		;
 	}
 
-
 	Diet::NutritionInfo niDef;
 };
 

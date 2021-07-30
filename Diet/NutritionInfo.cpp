@@ -1,5 +1,6 @@
 #include <iostream>
 #include "NutritionInfo.h"
+#include "NutritionInfoImplementation.h"
 #include "Util.h"
 #include <fstream>
 
@@ -7,95 +8,103 @@ namespace Diet
 {
 	NutritionInfo::NutritionInfo()
 		:
-		calories(0),
+		/*calories(0),
 		fat(Diet::Fats()),
 		cholesterol(0),
 		sodium(0),
 		carbohydrates(Diet::Carbohydrate()),
-		protein(0)
+		protein(0)*/
+		p(std::make_unique<Internal::NutritionInfoImplementation>())
 	{}
 
 	NutritionInfo::NutritionInfo(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein)
 		:
-		calories(calories),
-		fat(fat),
-		cholesterol(cholesterol),
-		sodium(sodium),
-		carbohydrates(carbs),
-		protein(protein)
+		//calories(calories),
+		//fat(fat),
+		//cholesterol(cholesterol),
+		//sodium(sodium),
+		//carbohydrates(carbs),
+		//protein(protein)
+		p(std::make_unique<Internal::NutritionInfoImplementation>(calories, fat, cholesterol, sodium, carbs, protein))
 	{}
+
+	NutritionInfo::~NutritionInfo()
+	{
+		//delete p;
+		//p = nullptr;
+	}
+
+	NutritionInfo::NutritionInfo(const NutritionInfo& rhs)
+		:
+		p(std::make_unique<Internal::NutritionInfoImplementation>())
+	{
+		Assign(rhs);
+	}
+
+	NutritionInfo& NutritionInfo::operator=(const NutritionInfo& rhs)
+	{
+		Assign(rhs);
+		return *this;
+	}
+
+	void NutritionInfo::Assign(const NutritionInfo& rhs)
+	{
+		p->calories = rhs.p->calories;
+		p->fat.total = rhs.p->fat.total;
+		p->fat.saturated = rhs.p->fat.saturated;
+		p->fat.trans = rhs.p->fat.trans;
+		p->fat.poly = rhs.p->fat.poly;
+		p->fat.mono = rhs.p->fat.mono;
+		p->cholesterol = rhs.p->cholesterol;
+		p->sodium = rhs.p->sodium;
+		p->carbohydrates.total = rhs.p->carbohydrates.total;
+		p->carbohydrates.dietryFiber = rhs.p->carbohydrates.dietryFiber;
+		p->carbohydrates.sugars.total = rhs.p->carbohydrates.sugars.total;
+		p->carbohydrates.sugars.added = rhs.p->carbohydrates.sugars.added;
+		p->carbohydrates.erythitol = rhs.p->carbohydrates.erythitol;
+		p->protein = rhs.p->protein;
+	}
 
 	NutritionInfo NutritionInfo::NewInfo()
 	{
-		static constexpr int min = 0;
-		static constexpr int max = 10000;
 		NutritionInfo ni;
-
-		ni.calories = Util::Input("Calories: ", min, max);
-		ni.fat.total = Util::Input("Total Fat: ", min, max);
-		ni.fat.saturated = Util::Input("Saturated Fat: ", min, max);
-		ni.fat.trans = Util::Input("Trans Fat: ", min, max);
-		ni.fat.poly = Util::Input("Polyunsaturated Fat: ", min, max);
-		ni.fat.mono = Util::Input("Monounsaturated Fat: ", min, max);
-		ni.cholesterol = Util::Input("Cholesterol: ", min, max);
-		ni.sodium = Util::Input("Sodium: ", min, max);
-		ni.carbohydrates.total = Util::Input("Total Carbs: ", min, max);
-		ni.carbohydrates.dietryFiber = Util::Input("Dietry Fiber: ", min, max);
-		ni.carbohydrates.sugars.total = Util::Input("Total Sugars: ", min, max);
-		ni.carbohydrates.sugars.added = Util::Input("Added Sugars ", min, max);
-		ni.carbohydrates.erythitol = Util::Input("Eryhitol ", min, max);
-		ni.protein = Util::Input("Protein: ", min, max);
-
+		ni.p->NewInfo();
 		return ni;
 	}
 
 	uint NutritionInfo::Calories() const
 	{
-		return calories;
+		return p->calories;
 	}
 
 	Fats NutritionInfo::Fat() const
 	{
-		return fat;
+		return p->fat;
 	}
 
 	uint NutritionInfo::Cholesterol() const
 	{
-		return cholesterol;
+		return p->cholesterol;
 	}
 
 	uint NutritionInfo::Sodium() const
 	{
-		return sodium;
+		return p->sodium;
 	}
 
 	Carbohydrate NutritionInfo::Carbohydrates() const
 	{
-		return carbohydrates;
+		return p->carbohydrates;
 	}
 
 	uint NutritionInfo::Protein() const
 	{
-		return protein;
+		return p->protein;
 	}
 
 	NutritionInfo& NutritionInfo::operator += (const NutritionInfo& rhs)
 	{
-		calories += rhs.calories;
-		fat.total += rhs.fat.total;
-		fat.saturated += rhs.fat.saturated;
-		fat.trans += rhs.fat.trans;
-		fat.poly += rhs.fat.poly;
-		fat.mono += rhs.fat.mono;
-		cholesterol += rhs.cholesterol;
-		sodium += rhs.sodium;
-		carbohydrates.total += rhs.carbohydrates.total;
-		carbohydrates.dietryFiber += rhs.carbohydrates.dietryFiber;
-		carbohydrates.sugars.total += rhs.carbohydrates.sugars.total;
-		carbohydrates.sugars.added += rhs.carbohydrates.sugars.added;
-		carbohydrates.erythitol += rhs.carbohydrates.erythitol;
-		protein += rhs.protein;
-
+		*p += *rhs.p;
 		return *this;
 	}
 
@@ -106,17 +115,35 @@ namespace Diet
 		return result;
 	}
 
+	NutritionInfo& NutritionInfo::operator *=(const float rhs)
+	{
+		*p *= rhs;
+		return *this;
+	}
+
+	const NutritionInfo NutritionInfo::operator * (const float rhs)
+	{
+		NutritionInfo result = *this;
+		result *= rhs;
+		return result;
+	}
+
+	bool NutritionInfo::operator == (const NutritionInfo& rhs) const
+	{
+		return *p == *rhs.p;
+	}
+
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
 		//Produce different output if writing to a file
 		if (typeid(out) == typeid(std::ofstream))
 		{
-			out << ni.calories << " " << ni.fat.total << " " << ni.fat.saturated << " "
-				<< ni.fat.trans << " " << ni.fat.poly << " " << ni.fat.mono << " "
-				<< ni.cholesterol << " " << ni.sodium << " " << ni.carbohydrates.total << " "
-				<< ni.carbohydrates.dietryFiber << " " << ni.carbohydrates.sugars.total << " "
-				<< ni.carbohydrates.sugars.added << " " << ni.carbohydrates.erythitol << " "
-				<< ni.protein;
+			out << ni.p->calories << " " << ni.p->fat.total << " " << ni.p->fat.saturated << " "
+				<< ni.p->fat.trans << " " << ni.p->fat.poly << " " << ni.p->fat.mono << " "
+				<< ni.p->cholesterol << " " << ni.p->sodium << " " << ni.p->carbohydrates.total << " "
+				<< ni.p->carbohydrates.dietryFiber << " " << ni.p->carbohydrates.sugars.total << " "
+				<< ni.p->carbohydrates.sugars.added << " " << ni.p->carbohydrates.erythitol << " "
+				<< ni.p->protein;
 
 			return out;
 		}
@@ -144,12 +171,12 @@ namespace Diet
 
 	std::istream& operator >> (std::istream& in, NutritionInfo& ni)
 	{
-		in >> ni.calories >> ni.fat.total >> ni.fat.saturated 
-			>> ni.fat.trans >> ni.fat.poly >> ni.fat.mono 
-			>> ni.cholesterol >> ni.sodium >> ni.carbohydrates.total 
-			>> ni.carbohydrates.dietryFiber >> ni.carbohydrates.sugars.total 
-			>> ni.carbohydrates.sugars.added >> ni.carbohydrates.erythitol 
-			>> ni.protein;
+		in >> ni.p->calories >> ni.p->fat.total >> ni.p->fat.saturated 
+			>> ni.p->fat.trans >> ni.p->fat.poly >> ni.p->fat.mono 
+			>> ni.p->cholesterol >> ni.p->sodium >> ni.p->carbohydrates.total 
+			>> ni.p->carbohydrates.dietryFiber >> ni.p->carbohydrates.sugars.total 
+			>> ni.p->carbohydrates.sugars.added >> ni.p->carbohydrates.erythitol 
+			>> ni.p->protein;
 
 		return in;
 	}

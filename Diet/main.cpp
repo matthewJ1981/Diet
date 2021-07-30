@@ -1,4 +1,4 @@
-#define TESTING
+#define TESTING 1
 
 #ifndef TESTING
 
