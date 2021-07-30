@@ -1,11 +1,29 @@
 #include <iostream>
 #include "NutritionInfo.h"
-//#include "NutritionInfoImplementation.h"
 #include "Util.h"
 #include <fstream>
 
 namespace Diet
 {
+	using Util::Eq;
+
+
+	bool Sugar::operator == (const Sugar& rhs) const
+	{
+		return Eq(total, rhs.total) && Eq(added, rhs.added);
+	}
+
+	bool Fats::operator == (const Fats& rhs) const
+	{
+		return Eq(total, rhs.total) && Eq(saturated, rhs.saturated) &&
+			   Eq(trans, rhs.trans) && Eq(poly, rhs.poly) && Eq(mono, rhs.mono);
+	}
+
+	bool Carbohydrate::operator == (const Carbohydrate& rhs) const
+	{
+		return Eq(total, rhs.total) && Eq(dietryFiber, rhs.dietryFiber) && sugars == rhs.sugars && Eq(erythitol, rhs.erythitol);
+	}
+
 	namespace Internal
 	{
 		class NutritionInfoImplementation
@@ -13,28 +31,28 @@ namespace Diet
 		public:
 			NutritionInfoImplementation()
 				:
-				calories(0),
-				fat({ 0, 0 }),
-				cholesterol(0),
-				sodium(0),
-				carbohydrates({ 0, 0, { 0, 0 }, 0 }),
-				protein(0)
+				calories(0.0f),
+				fat({ 0.0f, 0.0f }),
+				cholesterol(0.0f),
+				sodium(0.0f),
+				carbohydrates({ 0.0f, 0.0f, { 0.0f, 0.0f }, 0.0f }),
+				protein(0.0f)
 			{}
 
-			NutritionInfoImplementation(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein)
+			NutritionInfoImplementation(float calories, Fats fat, float cholesterol, float sodium, Carbohydrate carbs, float protein)
 				:
-				calories(0),
-				fat({ 0, 0 }),
-				cholesterol(0),
-				sodium(0),
-				carbohydrates({ 0, 0, { 0, 0 }, 0 }),
-				protein(0)
+				calories(calories),
+				fat(fat),
+				cholesterol(cholesterol),
+				sodium(sodium),
+				carbohydrates(carbs),
+				protein(protein)
 			{}
 
 			void NewInfo()
 			{
-				static constexpr int min = 0;
-				static constexpr int max = 10000;
+				static constexpr float min = 0.0f;
+				static constexpr float max = 10000.0f;
 
 				calories = Util::Input("Calories: ", min, max);
 				fat.total = Util::Input("Total Fat: ", min, max);
@@ -94,20 +112,20 @@ namespace Diet
 
 			bool operator== (const NutritionInfoImplementation& rhs)
 			{
-				return calories == rhs.calories &&
+				return Eq(calories, rhs.calories) &&
 					fat == rhs.fat &&
-					cholesterol == rhs.cholesterol &&
-					sodium == rhs.sodium &&
+					Eq(cholesterol, rhs.cholesterol) &&
+					Eq(sodium, rhs.sodium) &&
 					carbohydrates == rhs.carbohydrates &&
-					protein == rhs.protein;
+					Eq(protein, rhs.protein);
 			}
 
-			uint calories;
+			float calories;
 			Fats fat;
-			uint cholesterol;
-			uint sodium;
+			float cholesterol;
+			float sodium;
 			Carbohydrate carbohydrates;
-			uint protein;
+			float protein;
 		};
 	}
 
@@ -116,7 +134,7 @@ namespace Diet
 		p(std::make_unique<Internal::NutritionInfoImplementation>())
 	{}
 
-	NutritionInfo::NutritionInfo(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein)
+	NutritionInfo::NutritionInfo(float calories, Fats fat, float cholesterol, float sodium, Carbohydrate carbs, float protein)
 		:
 		p(std::make_unique<Internal::NutritionInfoImplementation>(calories, fat, cholesterol, sodium, carbs, protein))
 	{}
@@ -161,7 +179,7 @@ namespace Diet
 		return ni;
 	}
 
-	uint NutritionInfo::Calories() const
+	float NutritionInfo::Calories() const
 	{
 		return p->calories;
 	}
@@ -171,12 +189,12 @@ namespace Diet
 		return p->fat;
 	}
 
-	uint NutritionInfo::Cholesterol() const
+	float NutritionInfo::Cholesterol() const
 	{
 		return p->cholesterol;
 	}
 
-	uint NutritionInfo::Sodium() const
+	float NutritionInfo::Sodium() const
 	{
 		return p->sodium;
 	}
@@ -186,7 +204,7 @@ namespace Diet
 		return p->carbohydrates;
 	}
 
-	uint NutritionInfo::Protein() const
+	float NutritionInfo::Protein() const
 	{
 		return p->protein;
 	}

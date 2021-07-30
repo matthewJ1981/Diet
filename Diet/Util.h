@@ -2,8 +2,9 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <boost/math/special_functions/relative_difference.hpp>
 
-
+using boost::math::relative_difference;
 
 namespace Util
 {
@@ -43,5 +44,6 @@ namespace Util
 		return selection;
 	}
 
+	bool Eq(const float lhs, const float rhs);
 };
 

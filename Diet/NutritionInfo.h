@@ -1,5 +1,4 @@
 #pragma once
-#include "NIStructs.h"
 #include <memory>
 /**
  *	Simple class to store the nutritional information of a food item
@@ -12,11 +11,38 @@ namespace Diet
 		class NutritionInfoImplementation;
 	}
 
+	struct Sugar
+	{
+		float total = 0.0f;
+		float added = 0.0f;
+		bool operator == (const Sugar& rhs) const;
+	};
+
+	struct Fats
+	{
+		float total = 0.0f;
+		float saturated = 0.0f;
+		float trans = 0.0f;
+		float poly = 0.0f;
+		float mono = 0.0f;
+		bool operator == (const Fats& rhs) const;
+	};
+
+	struct Carbohydrate
+	{
+		float total = 0.0f;
+		float dietryFiber = 0.0f;
+		Sugar sugars;
+		float erythitol = 0.0f;
+		bool operator == (const Carbohydrate& rhs) const;
+
+	};
+
 	class NutritionInfo
 	{
 	public:
 		NutritionInfo();
-		NutritionInfo(uint calories, Fats fat, uint cholesterol, uint sodium, Carbohydrate carbs, uint protein);
+		NutritionInfo(float calories, Fats fat, float cholesterol, float sodium, Carbohydrate carbs, float protein);
 		~NutritionInfo();
 		NutritionInfo(const NutritionInfo& rhs);
 		NutritionInfo& operator=(const NutritionInfo& rhs);
@@ -26,12 +52,12 @@ namespace Diet
 		 */
 		static NutritionInfo NewInfo();
 
-		uint Calories() const;
+		float Calories() const;
 		Fats Fat() const;
-		uint Cholesterol() const;
-		uint Sodium() const;
+		float Cholesterol() const;
+		float Sodium() const;
 		Carbohydrate Carbohydrates() const;
-		uint Protein() const;
+		float Protein() const;
 
 		NutritionInfo& operator +=(const NutritionInfo& rhs);
 		const NutritionInfo operator + (const NutritionInfo& rhs);
