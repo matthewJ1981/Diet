@@ -68,6 +68,8 @@ namespace Diet
 
 		bool operator == (const NutritionInfo& rhs) const;
 
+		// The ofstream overload will not work corretly with chaining because << for built in types will return a basic ostream& 
+		// and the ostream overload will then take over.
 		friend std::ofstream& operator << (std::ofstream& out, const NutritionInfo& ni);
 		friend std::ostream& operator << (std::ostream& out, const NutritionInfo& ni);
 		friend std::istream& operator >> (std::istream& in,  NutritionInfo& ni);

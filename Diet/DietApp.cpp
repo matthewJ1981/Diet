@@ -98,20 +98,22 @@ namespace Diet
 	{
 		std::string name;
 		NutritionInfo ni;
+		float servings = 0.0f;
 		bool entering = true;
 		do
 		{
 			std::cout << "Name of Food? ";
 			std::getline(std::cin, name);
 			ni = NutritionInfo::NewInfo();
+			servings = Util::Input("How many servings?: ", 0.0f, 100.0f);
 
-			std::cout << "\nYou entered...\n\n" << name << "\n" << ni << "\n";
+			std::cout << "\nYou entered...\n\n" << name << "\n" << ni << "\nServings: " << servings << "\n";
+
 		}
 		while (Util::Input("Is this correct ? ") != 'Y' && Util::Input("Try again?") == 'Y');
 
 		std::cout << "\n";
-		float servings = Util::Input("How many servings?: ", 0.0f, 100.0f);
-
+		
 		total += ni * servings;
 		consumed.push_back({ {name, ni}, servings });
 		favorites.emplace_back(name, ni);
@@ -162,6 +164,7 @@ namespace Diet
 
 	void DietApp::FormatHelper(std::ostream& out, std::string col1, float col2)
 	{
+		out << std::setprecision(1) << std::fixed;
 		out << std::setw(25) << std::left << col1
 			<< std::setw(10) << std::right << col2 << "%\n";
 

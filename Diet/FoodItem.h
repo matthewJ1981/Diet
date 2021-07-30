@@ -17,6 +17,8 @@ namespace Diet
 		std::string Name() const;
 		Diet::NutritionInfo NutInfo() const;
 
+		// The ofstream overload will not work corretly with chaining because << for built in types will return a basic ostream& 
+		// and the ostream overload will then take over.
 		friend std::istream& operator >> (std::istream& in, FoodItem& fi);
 		friend std::ostream& operator << (std::ostream& out, const FoodItem& fi);
 		friend std::ofstream& operator << (std::ofstream& out, const FoodItem& fi);

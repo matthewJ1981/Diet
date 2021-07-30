@@ -30,7 +30,7 @@ namespace Diet
 	{
 		std::string temp = fi.name;
 		std::replace(temp.begin(), temp.end(), ' ', '_');
-		out << fi.name << " ";
+		out << temp << " ";
 		out << fi.info;
 
 		return out;

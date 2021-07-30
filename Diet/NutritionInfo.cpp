@@ -2,6 +2,7 @@
 #include "NutritionInfo.h"
 #include "Util.h"
 #include <fstream>
+#include <iomanip>
 
 namespace Diet
 {
@@ -110,20 +111,20 @@ namespace Diet
 
 			NutritionInfoImplementation& operator += (const NutritionInfoImplementation& rhs)
 			{
-				calories += calories;
-				fat.total += fat.total;
-				fat.saturated += fat.saturated;
-				fat.trans += fat.trans;
-				fat.poly += fat.poly;
-				fat.mono += fat.mono;
-				cholesterol += cholesterol;
-				sodium += sodium;
-				carbohydrates.total += carbohydrates.total;
-				carbohydrates.dietryFiber += carbohydrates.dietryFiber;
-				carbohydrates.sugars.total += carbohydrates.sugars.total;
-				carbohydrates.sugars.added += carbohydrates.sugars.added;
-				carbohydrates.erythitol += carbohydrates.erythitol;
-				protein += protein;
+				calories += rhs.calories;
+				fat.total += rhs.fat.total;
+				fat.saturated += rhs.fat.saturated;
+				fat.trans += rhs.fat.trans;
+				fat.poly += rhs.fat.poly;
+				fat.mono += rhs.fat.mono;
+				cholesterol += rhs.cholesterol;
+				sodium += rhs.sodium;
+				carbohydrates.total += rhs.carbohydrates.total;
+				carbohydrates.dietryFiber += rhs.carbohydrates.dietryFiber;
+				carbohydrates.sugars.total += rhs.carbohydrates.sugars.total;
+				carbohydrates.sugars.added += rhs.carbohydrates.sugars.added;
+				carbohydrates.erythitol += rhs.carbohydrates.erythitol;
+				protein += rhs.protein;
 
 				return *this;
 			}
@@ -272,6 +273,7 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const NutritionInfo& ni)
 	{
+		out << std::setprecision(1) << std::fixed;
 		out << "Calories: " << ni.Calories() << "\n";
 		out << "Total Fat: " << ni.Fat().total << "g\n";
 		out << "  Saturated Fat: " << ni.Fat().saturated << "g\n";
