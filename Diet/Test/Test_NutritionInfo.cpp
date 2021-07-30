@@ -7,3 +7,8 @@ TEST_F(NutritionInfoTest, DefaultConstructor)
 {
 	EXPECT_THAT(niDef, ::testing::Eq(Diet::NutritionInfo(0, { 0, 0, 0, 0, 0 }, 0, 0, { 0, 0, { 0, 0 }, 0 }, 0)));
 }
+
+TEST_F(NutritionInfoTest, Constructor)
+{
+	EXPECT_THAT(niDef, ::testing::Eq(Diet::NutritionInfo(1, { 1, 1, 1, 1, 1 }, 1, 1, { 1, 1, { 1, 1 }, 1 }, 1)));
+}

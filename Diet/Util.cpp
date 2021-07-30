@@ -17,7 +17,6 @@ namespace Util
 
 	bool Eq(const float lhs, const float rhs)
 	{
-		std::cerr << lhs - rhs << ": " << relative_difference(lhs, rhs) << "\n";
-		return abs(lhs - rhs) <= relative_difference(lhs, rhs);
+		return abs(lhs - rhs) <= 0.000001f;
 	}
 }

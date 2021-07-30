@@ -46,8 +46,8 @@ namespace Diet
 		 *	Output current calorie goal and total consumed for the day as a percentage of daily value
 		 */
 		static void Print(std::ostream& out, const NutritionInfo& ni);
-		static void FormatHelper(std::ostream& out, std::string col1, int col2);
-		static int Percentage(int amount, int max);
+		static void FormatHelper(std::ostream& out, std::string col1, float col2);
+		static float Percentage(float amount, float max);
 	
 		/**
 		 *	File IO
@@ -73,7 +73,7 @@ namespace Diet
 		static bool NoOver100(const NutritionInfo& ni);
 		/*static std::vector<std::vector<int>> GetCombos();*/
 
-		static void SetCalorieMax(int calories);
+		static void SetCalorieMax(float calories);
 		static void CheckTime();
 		static _int64 CurrentHour();
 		static boost::gregorian::date CurrentDate();
@@ -82,14 +82,14 @@ namespace Diet
 		static std::vector<FoodItem> favorites;
 		static Diet::NutritionInfo total;
 
-		static int calorieMax;
-		static constexpr int totFatMax = 75;
-		static constexpr int totSatFatMax = 20;
-		static constexpr int totCholMax = 300;
-		static constexpr int totSodMax = 2400;
-		static constexpr int totCarbMax = 250;
-		static constexpr int totFibreMax = 28;
-		static constexpr int totProteinMax = 50;
+		static float calorieMax;
+		static constexpr float totFatMax = 75.0f;
+		static constexpr float totSatFatMax = 20.0f;
+		static constexpr float totCholMax = 300.0f;
+		static constexpr float totSodMax = 2400.0f;
+		static constexpr float totCarbMax = 250.0f;
+		static constexpr float totFibreMax = 28.0f;
+		static constexpr float totProteinMax = 50.0f;
 
 		static const std::string consumedFile;
 		static const std::string favoritesFile;

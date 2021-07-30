@@ -31,7 +31,7 @@ namespace Diet
 				ConsumeFood();
 				break;
 			case 2:
-				SetCalorieMax(Util::Input("Enter new calorie goal: ", 1, 10000));
+				SetCalorieMax(Util::Input("Enter new calorie goal: ", 1.0f, 10000.0f));
 				break;	
 			case 3:
 				History();
@@ -160,16 +160,16 @@ namespace Diet
 		}
 	}
 
-	void DietApp::FormatHelper(std::ostream& out, std::string col1, int col2)
+	void DietApp::FormatHelper(std::ostream& out, std::string col1, float col2)
 	{
 		out << std::setw(25) << std::left << col1
 			<< std::setw(10) << std::right << col2 << "%\n";
 
 	}
 
-	int DietApp::Percentage(int amount, int max)
+	float DietApp::Percentage(float amount, float max)
 	{
-		return int(float(amount) / max * 100);
+		return amount / max * 100.0f;
 	}
 
 	std::ofstream DietApp::GetOfstream(std::string file, bool append)
@@ -376,41 +376,17 @@ namespace Diet
 	}
 	bool DietApp::NoOver100(const NutritionInfo& ni)
 	{
-		return (Percentage(ni.Calories(), calorieMax) <= 100) &&
-			   (Percentage(ni.Fat().total, totFatMax) <= 100) &&
-			   (Percentage(ni.Fat().saturated, totSatFatMax) <= 100) &&
-			   (Percentage(ni.Cholesterol(), totCholMax) <= 100) &&
-			   (Percentage(ni.Sodium(), totSodMax) <= 100) &&
-			   (Percentage(ni.Carbohydrates().total, totCarbMax) <= 100) &&
-			   (Percentage(ni.Carbohydrates().dietryFiber, totFibreMax) <= 100) &&
-			   (Percentage(ni.Protein(), totProteinMax) <= 100);
+		return (Percentage(ni.Calories(), calorieMax) <= 100.0f) &&
+			   (Percentage(ni.Fat().total, totFatMax) <= 100.0f) &&
+			   (Percentage(ni.Fat().saturated, totSatFatMax) <= 100.0f) &&
+			   (Percentage(ni.Cholesterol(), totCholMax) <= 100.0f) &&
+			   (Percentage(ni.Sodium(), totSodMax) <= 100.0f) &&
+			   (Percentage(ni.Carbohydrates().total, totCarbMax) <= 100.0f) &&
+			   (Percentage(ni.Carbohydrates().dietryFiber, totFibreMax) <= 100.0f) &&
+			   (Percentage(ni.Protein(), totProteinMax) <= 100.0f);
 	}
 
-	//std::vector<std::vector<int>> DietApp::GetCombos()
-	//{
-	//	std::vector<std::vector<int>> combos;
-	//	
-	//	for (size_t i = 0; i < favorites.size(); ++i)
-	//	{
-	//		NutritionInfo temp = total;
-	//		std::vector<int> amounts(favorites.size());
-
-	//		for (size_t j = i; j < favorites.size(); ++j)
-	//		{
-	//			while (NoOver100(temp + favorites[j].NutInfo()))
-	//			{
-	//				temp += favorites[j].NutInfo();
-	//				++amounts[j];
-	//			}
-	//		}
-
-	//		combos.push_back(amounts);
-	//	}
-
-	//	return combos;
-	//}
-
-	void DietApp::SetCalorieMax(int calories)
+	void DietApp::SetCalorieMax(float calories)
 	{
 		calorieMax = calories;
 	}
@@ -436,7 +412,7 @@ namespace Diet
 	std::vector<FoodItem> DietApp::favorites = {};
 	Diet::NutritionInfo DietApp::total = {};
 
-	int DietApp::calorieMax = 2000;
+	float DietApp::calorieMax = 2000.0f;
 	const std::string DietApp::consumedFile = "consumed.txt";
 	const std::string DietApp::favoritesFile = "favorites.txt";
 	const std::string DietApp::configFile = "config.txt";
