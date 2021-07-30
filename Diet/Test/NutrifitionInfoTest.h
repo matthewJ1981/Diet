@@ -12,5 +12,6 @@ protected:
 
 	Diet::NutritionInfo niDef;
 	Diet::NutritionInfo ni{ 1, { 1, 1, 1, 1, 1 }, 1, 1, { 1, 1, {1, 1}, 1 }, 1 };
+
 };
 

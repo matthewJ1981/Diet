@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <fstream>
 /**
  *	Simple class to store the nutritional information of a food item
  */
@@ -46,7 +47,7 @@ namespace Diet
 		~NutritionInfo();
 		NutritionInfo(const NutritionInfo& rhs);
 		NutritionInfo& operator=(const NutritionInfo& rhs);
-		void Assign(const NutritionInfo& rhs);
+		//void Assign(const NutritionInfo& rhs);
 		/**
 		 * Generate new NutirifionInfo object based upon user entry
 		 */
@@ -67,6 +68,7 @@ namespace Diet
 
 		bool operator == (const NutritionInfo& rhs) const;
 
+		friend std::ofstream& operator << (std::ofstream& out, const NutritionInfo& ni);
 		friend std::ostream& operator << (std::ostream& out, const NutritionInfo& ni);
 		friend std::istream& operator >> (std::istream& in,  NutritionInfo& ni);
 

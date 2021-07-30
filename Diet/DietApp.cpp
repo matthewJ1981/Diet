@@ -242,7 +242,12 @@ namespace Diet
 		else if (file == favoritesFile)
 		{
 			for (const auto& f : favorites)
+			{
 				outFile << f << "\n";
+				//operator<<(outFile, f);
+				//outFile << "\n";
+			}
+				
 		}
 		else if (file == configFile)
 		{

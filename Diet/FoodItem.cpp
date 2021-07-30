@@ -20,18 +20,19 @@ namespace Diet
 
 	std::ostream& operator << (std::ostream& out, const FoodItem& fi)
 	{
-		//Produce different output if writing to a file
-		if (typeid(out) == typeid(std::ofstream))
-		{
-			std::string temp = fi.name;
-			std::replace(temp.begin(), temp.end(), ' ', '_');
-			out << temp << " " << fi.info;
-		}
-		else
-		{
-			out << "Name: " << fi.Name() << "\n";
-			out << fi.NutInfo();
-		}
+		out << "Name: " << fi.Name() << "\n";
+		out << fi.NutInfo();
+
+		return out;
+	}
+
+	std::ofstream& operator << (std::ofstream& out, const FoodItem& fi)
+	{
+		std::string temp = fi.name;
+		std::replace(temp.begin(), temp.end(), ' ', '_');
+		out << fi.name << " ";
+		out << fi.info;
+
 		return out;
 	}
 
