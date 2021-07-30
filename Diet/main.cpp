@@ -14,7 +14,7 @@ int main()
 	return 0;
 }
 
-#elseif
+#else
 
 #include <gtest/gtest.h>
 

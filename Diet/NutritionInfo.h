@@ -38,19 +38,14 @@ namespace Diet
 
 		NutritionInfo& operator *= (const float rhs);
 		const NutritionInfo operator * (const float rhs);
+
 		bool operator == (const NutritionInfo& rhs) const;
+
 		friend std::ostream& operator << (std::ostream& out, const NutritionInfo& ni);
 		friend std::istream& operator >> (std::istream& in,  NutritionInfo& ni);
 
 	private:
 		std::unique_ptr<Internal::NutritionInfoImplementation> p;
-		/*uint calories;
-		Fats fat;
-		uint cholesterol;
-		uint sodium;
-		Carbohydrate carbohydrates;
-		uint protein;
-	*/
 	};
 }
 
