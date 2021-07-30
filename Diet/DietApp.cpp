@@ -64,9 +64,15 @@ namespace Diet
 	{
 		if (!prevRunDate.is_not_a_date())
 		{
-			std::cout << "\n****Writing yesterday's total to a file and resetting what you have consumed.****\n\n";
-			Write(totalsFile, true);
-			total = NutritionInfo();
+			std::cout << "\n****Writing previous day's total's to a file and resetting what you have consumed.****\n\n";
+
+			while (prevRunDate != currRunDate)
+			{
+				Write(totalsFile, true);
+				total = NutritionInfo();
+				prevRunDate = prevRunDate + date_duration(1);
+			}
+			
 			consumed.clear();
 			ClearConsumedFile();
 		}
