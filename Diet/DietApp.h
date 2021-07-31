@@ -45,7 +45,7 @@ namespace Diet
 		/**
 		 *	Output current calorie goal and total consumed for the day as a percentage of daily value
 		 */
-		static void Print(std::ostream& out, const NutritionInfo& ni);
+		static void Print(std::ostream& out, const FoodItem& ni);
 		static void FormatHelper(std::ostream& out, std::string col1, float col2);
 		static float Percentage(float amount, float max);
 	
@@ -67,10 +67,10 @@ namespace Diet
 		/**
 		* Calculate and display all food options for the rest of the day that don't take any daily value over 100%
         */
-		static void Options();
-		static void Options(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos);
-		static void PrintOptions(const std::vector<std::vector<uint>>& combos);
-		static bool NoOver100(const NutritionInfo& ni);
+		//static void Options();
+		//static void Options(NutritionInfo ni, uint i, std::vector<uint> amts, std::vector<std::vector<uint>>& combos);
+		//static void PrintOptions(const std::vector<std::vector<uint>>& combos);
+		//static bool NoOver100(const NutritionInfo& ni);
 		/*static std::vector<std::vector<int>> GetCombos();*/
 
 		static void SetCalorieMax(float calories);
@@ -80,7 +80,7 @@ namespace Diet
 
 		static std::vector<std::pair<FoodItem, float>> consumed;
 		static std::vector<FoodItem> favorites;
-		static Diet::NutritionInfo total;
+		static FoodItem total;
 
 		static float calorieMax;
 		static constexpr float totFatMax = 75.0f;

@@ -1,31 +1,59 @@
 #pragma once
-#include <string>
+
 #include <iostream>
-#include "NutritionInfo.h"
 #include <fstream>
+#include <memory>
 
 /**
 * Simple class to store a food item.  Consists of a name and nutritional info
 */
 namespace Diet
 {
+	namespace Internal
+	{
+		class FoodItemImplementation;
+	}
 	class FoodItem
 	{
 	public:
-		FoodItem() = default;
-		FoodItem(std::string name, Diet::NutritionInfo info);
+		FoodItem();
+		FoodItem(std::string name);
+		FoodItem(const FoodItem& rhs);
+		FoodItem& operator= (const FoodItem& rhs);
+		~FoodItem();
 		std::string Name() const;
-		Diet::NutritionInfo NutInfo() const;
 
+		float Calories() const;
+		float TotalFat() const;
+		float SaturatedFat() const;
+		float TransFat() const;
+		float PolyUnsaturatedFat() const;
+		float MonoUnsaturatedFat() const;
+		float Cholesterol() const;
+		float Sodium() const;
+		float TotalCarbohydrates() const;
+		float DietryFiber() const;
+		float TotalSuger() const;
+		float AddedSugar() const;
+		float Erythritol() const;
+		float Protein() const;
+
+		FoodItem& operator +=(const FoodItem& rhs);
+		const FoodItem operator + (const FoodItem& rhs);
+
+		FoodItem& operator *= (const float rhs);
+		const FoodItem operator * (const float rhs);
+
+		bool operator == (const FoodItem& rhs) const;
+
+		void New(std::ostream& out, std::istream& in);
 		void Serialize(std::ofstream& out) const;
 		void Deserialize(std::ifstream& in);
-		// The ofstream overload will not work corretly with chaining because << for built in types will return a basic ostream& 
-		// and the ostream overload will then take over.
-		//friend std::istream& operator >> (std::istream& in, FoodItem& fi);
+
 		friend std::ostream& operator << (std::ostream& out, const FoodItem& fi);
-		//friend std::ofstream& operator << (std::ofstream& out, const FoodItem& fi);
+
 	private:
-		std::string name;
-		Diet::NutritionInfo info;
+		std::unique_ptr<Internal::FoodItemImplementation> impl;
+
 	};
 }

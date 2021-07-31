@@ -7,9 +7,12 @@
 #include <sstream>
 #include "Util.h"
 
+#include "Fooditem.h"
+
 
 int main()
 {
+	//Diet::FoodItem f;
 	Diet::DietApp::Go();
 	return 0;
 }
