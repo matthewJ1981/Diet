@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 
 namespace Util
 {
@@ -42,6 +43,7 @@ namespace Util
 	}
 
 	bool Eq(const float lhs, const float rhs);
-
+	std::ofstream GetOfstream(std::string file, bool append = false);
+	std::ifstream GetIfstream(std::string file);
 };
 

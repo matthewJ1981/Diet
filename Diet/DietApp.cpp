@@ -44,12 +44,12 @@ namespace Diet
 				throw std::runtime_error("Invalid input");
 			}
 		}
-		Write();
+		Serialize();
 	}
 
 	void DietApp::Init()
 	{
-		Read();
+		Deserialize();
 		
 		startHour = CurrentHour();
 		currRunDate = CurrentDate();
@@ -66,7 +66,7 @@ namespace Diet
 
 			while (prevRunDate != currRunDate)
 			{
-				Write(totalsFile, true);
+				WriteTotal();
 				total = Diet::FoodItem();
 				prevRunDate = prevRunDate + date_duration(1);
 			}
@@ -170,119 +170,41 @@ namespace Diet
 		return amount / max * 100.0f;
 	}
 
-	std::ofstream DietApp::GetOfstream(std::string file, bool append)
+	void DietApp::Serialize()
 	{
-		std::ofstream outFile;
-		try
 		{
-			append == true ? outFile.open(file, std::ios_base::app) : outFile.open(file);
-		}
-		catch (std::exception e)
-		{
-			std::cerr << e.what();
-			abort();
-		}
-
-		if (!outFile)
-		{
-			std::cerr << "Cannot open " + file + "\n";
-			abort();
-		}
-
-		return outFile;
-	}
-
-	std::ifstream DietApp::GetIfstream(std::string file)
-	{
-		std::ifstream inFile;
-		try
-		{
-			inFile.open(file);
-		}
-		catch (std::exception e)
-		{
-			std::cerr << e.what();
-			abort();
-		}
-
-		if (!inFile)
-		{
-			GetOfstream(file);
-			inFile.open(file);
-		}
-
-		return inFile;
-	}
-
-	void DietApp::Write()
-	{
-		Write(consumedFile);
-		Write(favoritesFile);
-		Write(configFile);
-	}
-
-	void DietApp::Read()
-	{
-		Read(consumedFile);
-		Read(favoritesFile);
-		Read(configFile);
-	}
-
-	void DietApp::Write(std::string file, bool append)
-	{
-		auto outFile = GetOfstream(file, append);
-
-		if (file == consumedFile)
-		{
+			auto outFile = Util::GetOfstream(consumedFile);
 			for (const auto& f : consumed)
 			{
 				f.first.Serialize(outFile);
-				//outFile << f.first << " " << f.second << "\n";
-				outFile << " " << f.second;
+				outFile << " " << f.second << "\n";
 			}
 		}
-		else if (file == favoritesFile)
 		{
+			auto outFile = Util::GetOfstream(favoritesFile);
 			for (const auto& f : favorites)
 			{
 				f.Serialize(outFile);
 				outFile << "\n";
-				//outFile << f << "\n";
-				//operator<<(outFile, f);
-				//outFile << "\n";
+
 			}
-				
 		}
-		else if (file == configFile)
 		{
+			auto outFile = Util::GetOfstream(configFile);
 			outFile << calorieMax << "\n";
 			outFile << prevRunDate << "\n";
 		}
-		else if (file == totalsFile)
-		{
-			outFile << prevRunDate << " ";
-			total.Serialize(outFile);
-			outFile << "\n";
-			//outFile << total << "\n";
-		}
-		else
-			throw std::runtime_error("Invalid filename");
-
-		outFile.close();
 	}
 
-	void DietApp::Read(std::string file)
+	void DietApp::Deserialize()
 	{
-		auto inFile = GetIfstream(file);
-
-		if (file == consumedFile)
 		{
+			auto inFile = Util::GetIfstream(consumedFile);
 			while (true)
 			{
 				FoodItem f;
 				float servings = 0;
 				f.Deserialize(inFile);
-				///inFile >> f >> servings;
 				inFile >> servings;
 				if (inFile.eof())
 					break;
@@ -291,53 +213,57 @@ namespace Diet
 				total += f * servings;
 			}
 		}
-		else if (file == favoritesFile)
 		{
+			auto inFile = Util::GetIfstream(favoritesFile);
 			while (true)
 			{
 				FoodItem f;
-				//inFile >> f;
 				f.Deserialize(inFile);
 				if (inFile.eof())
 					break;
 				favorites.push_back(f);
 			}
 		}
-		else if (file == configFile)
 		{
+			auto inFile = Util::GetIfstream(configFile);
 			inFile >> DietApp::calorieMax;
 			inFile >> DietApp::prevRunDate;
 		}
-		else if (file == totalsFile)
+	}
+
+	void DietApp::WriteTotal()
+	{
+		auto outFile = Util::GetOfstream(totalsFile, true);
+		outFile << prevRunDate << " ";
+		total.Serialize(outFile);
+		outFile << "\n";
+	}
+
+	void DietApp::ReadTotal()
+	{
+		auto inFile = Util::GetIfstream(totalsFile);
+		while (true)
 		{
-			while (true)
-			{
-				boost::gregorian::date d;
-				FoodItem f;
-				//inFile >> d >> ni;
-				inFile >> d;
-				f.Deserialize(inFile);
-				if (inFile.eof())
-					break;
+			boost::gregorian::date d;
+			FoodItem f;
+			inFile >> d;
+			f.Deserialize(inFile);
+			if (inFile.eof())
+				break;
 
-				std::cout << d << "\n";
-				Print(std::cout, f);
-			}
+			std::cout << d << "\n";
+			Print(std::cout, f);
 		}
-		else
-			throw std::runtime_error("Invalid filename");
-
-		inFile.close();
 	}
 
 	void DietApp::ClearConsumedFile()
 	{
-		auto outFile = GetOfstream(consumedFile);
+		auto outFile = Util::GetOfstream(consumedFile);
 	}
 
 	void DietApp::History()
 	{
-		Read(totalsFile);
+		ReadTotal();
 	}
 
 	//void DietApp::Options()

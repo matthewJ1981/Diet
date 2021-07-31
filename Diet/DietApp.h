@@ -52,12 +52,13 @@ namespace Diet
 		/**
 		 *	File IO
 		 */
-		static std::ofstream GetOfstream(std::string file, bool append = false);
-		static std::ifstream GetIfstream(std::string file);
-		static void Write();
-		static void Read();
-		static void Write(std::string, bool append = false);
-		static void Read(std::string);
+
+		static void Serialize();
+		static void Deserialize();
+		static void WriteTotal();
+		static void ReadTotal();
+	/*	static void Write(std::string, bool append = false);
+		static void Read(std::string);*/
 		static void ClearConsumedFile();
 
 		/**
