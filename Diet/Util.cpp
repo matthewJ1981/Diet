@@ -62,4 +62,24 @@ namespace Util
 
 		return inFile;
 	}
+
+	float Util::Percentage(float amount, float max)
+	{
+		return amount / max * 100.0f;
+	}
+
+	bool Util::CheckTime(_int64 startHour)
+	{
+		return CurrentHour == 0 && startHour != 0;
+	}
+
+	_int64 Util::CurrentHour()
+	{
+		return boost::posix_time::second_clock::local_time().time_of_day().hours();
+	}
+
+	boost::gregorian::date Util::CurrentDate()
+	{
+		return boost::posix_time::second_clock::local_time().date();
+	}
 }

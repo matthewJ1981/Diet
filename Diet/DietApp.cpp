@@ -10,6 +10,7 @@ namespace Diet
 {
 	void DietApp::Go()
 	{
+		using Util::CheckTime;
 		if (started)
 			return;
 
@@ -19,7 +20,9 @@ namespace Diet
 		bool running = true;
 		while (running)
 		{
-			CheckTime();
+			if (CheckTime(startHour))
+				Reset();
+
 			Print(std::cout, total);
 			int selection = Util::Input("Consume food (1)\nAdjust Calorie Goal (2)\nShow history (3)\nOptions (4)\nQuit (5)\n", 1, 5);
 
@@ -51,8 +54,8 @@ namespace Diet
 	{
 		Deserialize();
 		
-		startHour = CurrentHour();
-		currRunDate = CurrentDate();
+		startHour = Util::CurrentHour();
+		currRunDate = Util::CurrentDate();
 
 		if (prevRunDate != currRunDate)
 			Reset();
@@ -133,6 +136,7 @@ namespace Diet
 
 	void DietApp::Print(std::ostream& out, const FoodItem& fi)
 	{
+		using Util::Percentage;
 		std::cout << "You are aiming at consuming " << calorieMax << " calories per day.\n";
 
 		if (!consumed.empty())
@@ -162,12 +166,6 @@ namespace Diet
 		out << std::setprecision(1) << std::fixed;
 		out << std::setw(25) << std::left << col1
 			<< std::setw(10) << std::right << col2 << "%\n";
-
-	}
-
-	float DietApp::Percentage(float amount, float max)
-	{
-		return amount / max * 100.0f;
 	}
 
 	void DietApp::Serialize()
@@ -331,23 +329,6 @@ namespace Diet
 	void DietApp::SetCalorieMax(float calories)
 	{
 		calorieMax = calories;
-	}
-
-	void DietApp::CheckTime()
-	{
-		auto currHour = CurrentHour();
-		if (currHour == 0 && startHour != 0)
-			Reset();
-	}
-
-	_int64 DietApp::CurrentHour()
-	{
-		return second_clock::local_time().time_of_day().hours();
-	}
-
-	boost::gregorian::date DietApp::CurrentDate()
-	{
-		return boost::posix_time::second_clock::local_time().date();
 	}
 
 	std::vector<std::pair<FoodItem, float>> DietApp::consumed = { };

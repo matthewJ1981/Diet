@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 namespace Util
 {
@@ -45,5 +46,9 @@ namespace Util
 	bool Eq(const float lhs, const float rhs);
 	std::ofstream GetOfstream(std::string file, bool append = false);
 	std::ifstream GetIfstream(std::string file);
+	float Percentage(float amount, float max);
+	bool CheckTime(_int64 startHour);
+	_int64 CurrentHour();
+	boost::gregorian::date CurrentDate();
 };
 

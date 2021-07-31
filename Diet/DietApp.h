@@ -74,9 +74,6 @@ namespace Diet
 		//static bool NoOver100(const NutritionInfo& ni);
 
 		static void SetCalorieMax(float calories);
-		static void CheckTime();
-		static _int64 CurrentHour();
-		static boost::gregorian::date CurrentDate();
 
 		static std::vector<std::pair<FoodItem, float>> consumed;
 		static std::vector<FoodItem> favorites;
