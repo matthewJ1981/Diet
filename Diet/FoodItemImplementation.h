@@ -55,7 +55,7 @@ namespace Diet
 
 				void Serialize(std::ofstream& out) const;
 				void Deserialize(std::ifstream& in);
-				void New();
+				void New(std::ostream& out, std::istream& in);
 			};
 
 			FoodItemImplementation();

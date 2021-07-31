@@ -27,226 +27,280 @@ TEST_F(FoodItemTest, DefaultConstructor)
 
 TEST_F(FoodItemTest, Constructor)
 {
-	EXPECT_THAT(fi.Name(), Eq("Food"));
-	EXPECT_THAT(fi.Calories(), Eq(0));
-	EXPECT_THAT(fi.TotalFat(), Eq(0));
-	EXPECT_THAT(fi.SaturatedFat(), Eq(0));
-	EXPECT_THAT(fi.TransFat(), Eq(0));
-	EXPECT_THAT(fi.PolyUnsaturatedFat(), Eq(0));
-	EXPECT_THAT(fi.MonoUnsaturatedFat(), Eq(0));
-	EXPECT_THAT(fi.Cholesterol(), Eq(0));
-	EXPECT_THAT(fi.Sodium(), Eq(0));
-	EXPECT_THAT(fi.TotalCarbohydrates(), Eq(0));
-	EXPECT_THAT(fi.DietryFiber(), Eq(0));
-	EXPECT_THAT(fi.TotalSuger(), Eq(0));
-	EXPECT_THAT(fi.AddedSugar(), Eq(0));
-	EXPECT_THAT(fi.Erythritol(), Eq(0));
-	EXPECT_THAT(fi.Protein(), Eq(0));
+	EXPECT_THAT(fi.Name(), Eq("Bacon"));
+	EXPECT_THAT(fi.Calories(), Eq(1));
+	EXPECT_THAT(fi.TotalFat(), Eq(1));
+	EXPECT_THAT(fi.SaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.TransFat(), Eq(1));
+	EXPECT_THAT(fi.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.Cholesterol(), Eq(1));
+	EXPECT_THAT(fi.Sodium(), Eq(1));
+	EXPECT_THAT(fi.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(fi.DietryFiber(), Eq(1));
+	EXPECT_THAT(fi.TotalSuger(), Eq(1));
+	EXPECT_THAT(fi.AddedSugar(), Eq(1));
+	EXPECT_THAT(fi.Erythritol(), Eq(1));
+	EXPECT_THAT(fi.Protein(), Eq(1));
 }
-//
-//TEST_F(NutritionInfoTest, CopyConstructor)
-//{
-//	Diet::NutritionInfo niC(ni);
-//	EXPECT_THAT(niC, Eq(ni));
-//}
-//
-//TEST_F(NutritionInfoTest, CopyAssignment)
-//{
-//	niDef = ni;
-//	EXPECT_THAT(niDef, Eq(ni));
-//}
-//
-//TEST_F(NutritionInfoTest, NewInfo)
-//{
-//	FAIL();
-//	//EXPECT_THAT(ni.Calories(), Eq(1));
-//	//EXPECT_THAT(ni.Fat().total, Eq(1));
-//	//EXPECT_THAT(ni.Fat().saturated, Eq(1));
-//	//EXPECT_THAT(ni.Fat().trans, Eq(1));
-//	//EXPECT_THAT(ni.Fat().poly, Eq(1));
-//	//EXPECT_THAT(ni.Fat().mono, Eq(1));
-//	//EXPECT_THAT(ni.Cholesterol(), Eq(1));
-//	//EXPECT_THAT(ni.Sodium(), Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().total, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().dietryFiber, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().sugars.total, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().sugars.added, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().erythitol, Eq(1));
-//	//EXPECT_THAT(ni.Protein(), Eq(1));
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorPlusEquals)
-//{
-//	niDef += ni;
-//	EXPECT_THAT(niDef.Calories(), Eq(1));
-//	EXPECT_THAT(niDef.Fat().total, Eq(1));
-//	EXPECT_THAT(niDef.Fat().saturated, Eq(1));
-//	EXPECT_THAT(niDef.Fat().trans, Eq(1));
-//	EXPECT_THAT(niDef.Fat().poly, Eq(1));
-//	EXPECT_THAT(niDef.Fat().mono, Eq(1));
-//	EXPECT_THAT(niDef.Cholesterol(), Eq(1));
-//	EXPECT_THAT(niDef.Sodium(), Eq(1));
-//	EXPECT_THAT(niDef.Carbohydrates().total, Eq(1));
-//	EXPECT_THAT(niDef.Carbohydrates().dietryFiber, Eq(1));
-//	EXPECT_THAT(niDef.Carbohydrates().sugars.total, Eq(1));
-//	EXPECT_THAT(niDef.Carbohydrates().sugars.added, Eq(1));
-//	EXPECT_THAT(niDef.Carbohydrates().erythitol, Eq(1));
-//	EXPECT_THAT(niDef.Protein(), Eq(1));
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorPlus)
-//{
-//	Diet::NutritionInfo n = niDef + ni;
-//	EXPECT_THAT(n.Calories(), Eq(1));
-//	EXPECT_THAT(n.Fat().total, Eq(1));
-//	EXPECT_THAT(n.Fat().saturated, Eq(1));
-//	EXPECT_THAT(n.Fat().trans, Eq(1));
-//	EXPECT_THAT(n.Fat().poly, Eq(1));
-//	EXPECT_THAT(n.Fat().mono, Eq(1));
-//	EXPECT_THAT(n.Cholesterol(), Eq(1));
-//	EXPECT_THAT(n.Sodium(), Eq(1));
-//	EXPECT_THAT(n.Carbohydrates().total, Eq(1));
-//	EXPECT_THAT(n.Carbohydrates().dietryFiber, Eq(1));
-//	EXPECT_THAT(n.Carbohydrates().sugars.total, Eq(1));
-//	EXPECT_THAT(n.Carbohydrates().sugars.added, Eq(1));
-//	EXPECT_THAT(n.Carbohydrates().erythitol, Eq(1));
-//	EXPECT_THAT(n.Protein(), Eq(1));
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorTimesEquals)
-//{
-//	ni *= 3;
-//	EXPECT_THAT(ni.Calories(), Eq(3));
-//	EXPECT_THAT(ni.Fat().total, Eq(3));
-//	EXPECT_THAT(ni.Fat().saturated, Eq(3));
-//	EXPECT_THAT(ni.Fat().trans, Eq(3));
-//	EXPECT_THAT(ni.Fat().poly, Eq(3));
-//	EXPECT_THAT(ni.Fat().mono, Eq(3));
-//	EXPECT_THAT(ni.Cholesterol(), Eq(3));
-//	EXPECT_THAT(ni.Sodium(), Eq(3));
-//	EXPECT_THAT(ni.Carbohydrates().total, Eq(3));
-//	EXPECT_THAT(ni.Carbohydrates().dietryFiber, Eq(3));
-//	EXPECT_THAT(ni.Carbohydrates().sugars.total, Eq(3));
-//	EXPECT_THAT(ni.Carbohydrates().sugars.added, Eq(3));
-//	EXPECT_THAT(ni.Carbohydrates().erythitol, Eq(3));
-//	EXPECT_THAT(ni.Protein(), Eq(3));
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorTimes)
-//{
-//	Diet::NutritionInfo n = ni * 3;
-//	EXPECT_THAT(n.Calories(), Eq(3));
-//	EXPECT_THAT(n.Fat().total, Eq(3));
-//	EXPECT_THAT(n.Fat().saturated, Eq(3));
-//	EXPECT_THAT(n.Fat().trans, Eq(3));
-//	EXPECT_THAT(n.Fat().poly, Eq(3));
-//	EXPECT_THAT(n.Fat().mono, Eq(3));
-//	EXPECT_THAT(n.Cholesterol(), Eq(3));
-//	EXPECT_THAT(n.Sodium(), Eq(3));
-//	EXPECT_THAT(n.Carbohydrates().total, Eq(3));
-//	EXPECT_THAT(n.Carbohydrates().dietryFiber, Eq(3));
-//	EXPECT_THAT(n.Carbohydrates().sugars.total, Eq(3));
-//	EXPECT_THAT(n.Carbohydrates().sugars.added, Eq(3));
-//	EXPECT_THAT(n.Carbohydrates().erythitol, Eq(3));
-//	EXPECT_THAT(n.Protein(), Eq(3));
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorEqualsDef)
-//{
-//	EXPECT_TRUE((niDef == Diet::NutritionInfo(0, { 0, 0, 0, 0, 0 }, 0, 0, { 0, 0, { 0, 0 }, 0 }, 0)));
-//
-//	EXPECT_THAT(niDef.Calories(), Eq(0));
-//	EXPECT_THAT(niDef.Fat().total, Eq(0));
-//	EXPECT_THAT(niDef.Fat().saturated, Eq(0));
-//	EXPECT_THAT(niDef.Fat().trans, Eq(0));
-//	EXPECT_THAT(niDef.Fat().poly, Eq(0));
-//	EXPECT_THAT(niDef.Fat().mono, Eq(0));
-//	EXPECT_THAT(niDef.Cholesterol(), Eq(0));
-//	EXPECT_THAT(niDef.Sodium(), Eq(0));
-//	EXPECT_THAT(niDef.Carbohydrates().total, Eq(0));
-//	EXPECT_THAT(niDef.Carbohydrates().dietryFiber, Eq(0));
-//	EXPECT_THAT(niDef.Carbohydrates().sugars.total, Eq(0));
-//	EXPECT_THAT(niDef.Carbohydrates().sugars.added, Eq(0));
-//	EXPECT_THAT(niDef.Carbohydrates().erythitol, Eq(0));
-//	EXPECT_THAT(niDef.Protein(), Eq(0));
-//
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorEquals)
-//{
-//	EXPECT_TRUE((ni == Diet::NutritionInfo(1, { 1, 1, 1, 1, 1 }, 1, 1, { 1, 1, { 1, 1 }, 1 }, 1)));
-//
-//	EXPECT_THAT(ni.Calories(), Eq(1));
-//	EXPECT_THAT(ni.Fat().total, Eq(1));
-//	EXPECT_THAT(ni.Fat().saturated, Eq(1));
-//	EXPECT_THAT(ni.Fat().trans, Eq(1));
-//	EXPECT_THAT(ni.Fat().poly, Eq(1));
-//	EXPECT_THAT(ni.Fat().mono, Eq(1));
-//	EXPECT_THAT(ni.Cholesterol(), Eq(1));
-//	EXPECT_THAT(ni.Sodium(), Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().total, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().dietryFiber, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().sugars.total, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().sugars.added, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().erythitol, Eq(1));
-//	EXPECT_THAT(ni.Protein(), Eq(1));
-//
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorInsertion)
-//{
-//	std::stringstream ss;
-//	ss << ni;
-//
-//	std::string out = "";
-//	out += "Calories: 1\n";
-//	out += "Total Fat: 1g\n";
-//	out += "  Saturated Fat: 1g\n";
-//	out += "  Trans Fat: 1g\n";
-//	out += "  Polyunsaturated: 1g\n";
-//	out += "  Monounsaturated: 1g\n";
-//	out += "Cholesterol: 1mg\n";
-//	out += "Sodium: 1mg\n";
-//	out += "Total Carbohydrate: 1g\n";
-//	out += "  Dietary Fibre: 1g\n";
-//	out += "  Total Sugars: 1g\n";
-//	out += "    Added Sugars: 1g\n";
-//    out += "    Erythitol: 1g\n";
-//	out += "Protein: 1g\n";
-//
-//	EXPECT_THAT(ss.str(), Eq(out));
-//
-//	EXPECT_THAT(ni.Calories(), Eq(1));
-//	EXPECT_THAT(ni.Fat().total, Eq(1));
-//	EXPECT_THAT(ni.Fat().saturated, Eq(1));
-//	EXPECT_THAT(ni.Fat().trans, Eq(1));
-//	EXPECT_THAT(ni.Fat().poly, Eq(1));
-//	EXPECT_THAT(ni.Fat().mono, Eq(1));
-//	EXPECT_THAT(ni.Cholesterol(), Eq(1));
-//	EXPECT_THAT(ni.Sodium(), Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().total, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().dietryFiber, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().sugars.total, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().sugars.added, Eq(1));
-//	EXPECT_THAT(ni.Carbohydrates().erythitol, Eq(1));
-//	EXPECT_THAT(ni.Protein(), Eq(1));
-//}
-//
-//TEST_F(NutritionInfoTest, OperatorExtraction)
-//{
-//	FAIL();
-//	//EXPECT_THAT(ni.Calories(), Eq(1));
-//	//EXPECT_THAT(ni.Fat().total, Eq(1));
-//	//EXPECT_THAT(ni.Fat().saturated, Eq(1));
-//	//EXPECT_THAT(ni.Fat().trans, Eq(1));
-//	//EXPECT_THAT(ni.Fat().poly, Eq(1));
-//	//EXPECT_THAT(ni.Fat().mono, Eq(1));
-//	//EXPECT_THAT(ni.Cholesterol(), Eq(1));
-//	//EXPECT_THAT(ni.Sodium(), Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().total, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().dietryFiber, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().sugars.total, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().sugars.added, Eq(1));
-//	//EXPECT_THAT(ni.Carbohydrates().erythitol, Eq(1));
-//	//EXPECT_THAT(ni.Protein(), Eq(1));
-//}
+
+TEST_F(FoodItemTest, CopyConstructor)
+{
+	Diet::FoodItem fiC(fi);
+
+	EXPECT_THAT(fiC, Eq(fi));
+	EXPECT_THAT(fiC.Name(), Eq("Bacon"));
+	EXPECT_THAT(fiC.Calories(), Eq(1));
+	EXPECT_THAT(fiC.TotalFat(), Eq(1));
+	EXPECT_THAT(fiC.SaturatedFat(), Eq(1));
+	EXPECT_THAT(fiC.TransFat(), Eq(1));
+	EXPECT_THAT(fiC.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fiC.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fiC.Cholesterol(), Eq(1));
+	EXPECT_THAT(fiC.Sodium(), Eq(1));
+	EXPECT_THAT(fiC.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(fiC.DietryFiber(), Eq(1));
+	EXPECT_THAT(fiC.TotalSuger(), Eq(1));
+	EXPECT_THAT(fiC.AddedSugar(), Eq(1));
+	EXPECT_THAT(fiC.Erythritol(), Eq(1));
+	EXPECT_THAT(fiC.Protein(), Eq(1));
+}
+
+TEST_F(FoodItemTest, CopyAssignment)
+{
+	fiDef = fi;
+	EXPECT_THAT(fiDef, Eq(fi));
+	EXPECT_THAT(fiDef.Name(), Eq("Bacon"));
+	EXPECT_THAT(fiDef.Calories(), Eq(1));
+	EXPECT_THAT(fiDef.TotalFat(), Eq(1));
+	EXPECT_THAT(fiDef.SaturatedFat(), Eq(1));
+	EXPECT_THAT(fiDef.TransFat(), Eq(1));
+	EXPECT_THAT(fiDef.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fiDef.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fiDef.Cholesterol(), Eq(1));
+	EXPECT_THAT(fiDef.Sodium(), Eq(1));
+	EXPECT_THAT(fiDef.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(fiDef.DietryFiber(), Eq(1));
+	EXPECT_THAT(fiDef.TotalSuger(), Eq(1));
+	EXPECT_THAT(fiDef.AddedSugar(), Eq(1));
+	EXPECT_THAT(fiDef.Erythritol(), Eq(1));
+	EXPECT_THAT(fiDef.Protein(), Eq(1));
+}
+
+TEST_F(FoodItemTest, New)
+{
+	RunNew(fi, "FoodItemNewTest.txt");
+
+	EXPECT_THAT(fi.Name(), Eq("Fries"));
+	EXPECT_THAT(fi.Calories(), Eq(3));
+	EXPECT_THAT(fi.TotalFat(), Eq(3));
+	EXPECT_THAT(fi.SaturatedFat(), Eq(3));
+	EXPECT_THAT(fi.TransFat(), Eq(3));
+	EXPECT_THAT(fi.PolyUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(fi.MonoUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(fi.Cholesterol(), Eq(3));
+	EXPECT_THAT(fi.Sodium(), Eq(3));
+	EXPECT_THAT(fi.TotalCarbohydrates(), Eq(3));
+	EXPECT_THAT(fi.DietryFiber(), Eq(3));
+	EXPECT_THAT(fi.TotalSuger(), Eq(3));
+	EXPECT_THAT(fi.AddedSugar(), Eq(3));
+	EXPECT_THAT(fi.Erythritol(), Eq(3));
+	EXPECT_THAT(fi.Protein(), Eq(3));
+}
+
+TEST_F(FoodItemTest, OperatorPlusEquals)
+{
+	fiDef += fi;
+
+	EXPECT_THAT(fiDef.Name(), Eq(""));
+	EXPECT_THAT(fiDef.Calories(), Eq(1));
+	EXPECT_THAT(fiDef.TotalFat(), Eq(1));
+	EXPECT_THAT(fiDef.SaturatedFat(), Eq(1));
+	EXPECT_THAT(fiDef.TransFat(), Eq(1));
+	EXPECT_THAT(fiDef.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fiDef.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fiDef.Cholesterol(), Eq(1));
+	EXPECT_THAT(fiDef.Sodium(), Eq(1));
+	EXPECT_THAT(fiDef.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(fiDef.DietryFiber(), Eq(1));
+	EXPECT_THAT(fiDef.TotalSuger(), Eq(1));
+	EXPECT_THAT(fiDef.AddedSugar(), Eq(1));
+	EXPECT_THAT(fiDef.Erythritol(), Eq(1));
+	EXPECT_THAT(fiDef.Protein(), Eq(1));
+}
+
+TEST_F(FoodItemTest, OperatorPlus)
+{
+	Diet::FoodItem f = fiDef + fi;
+
+	EXPECT_THAT(f.Name(), Eq(""));
+	EXPECT_THAT(f.Calories(), Eq(1));
+	EXPECT_THAT(f.TotalFat(), Eq(1));
+	EXPECT_THAT(f.SaturatedFat(), Eq(1));
+	EXPECT_THAT(f.TransFat(), Eq(1));
+	EXPECT_THAT(f.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(f.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(f.Cholesterol(), Eq(1));
+	EXPECT_THAT(f.Sodium(), Eq(1));
+	EXPECT_THAT(f.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(f.DietryFiber(), Eq(1));
+	EXPECT_THAT(f.TotalSuger(), Eq(1));
+	EXPECT_THAT(f.AddedSugar(), Eq(1));
+	EXPECT_THAT(f.Erythritol(), Eq(1));
+	EXPECT_THAT(f.Protein(), Eq(1));
+}
+
+TEST_F(FoodItemTest, OperatorTimesEquals)
+{
+	fi *= 3;
+
+	EXPECT_THAT(fi.Name(), Eq("Bacon"));
+	EXPECT_THAT(fi.Calories(), Eq(3));
+	EXPECT_THAT(fi.TotalFat(), Eq(3));
+	EXPECT_THAT(fi.SaturatedFat(), Eq(3));
+	EXPECT_THAT(fi.TransFat(), Eq(3));
+	EXPECT_THAT(fi.PolyUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(fi.MonoUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(fi.Cholesterol(), Eq(3));
+	EXPECT_THAT(fi.Sodium(), Eq(3));
+	EXPECT_THAT(fi.TotalCarbohydrates(), Eq(3));
+	EXPECT_THAT(fi.DietryFiber(), Eq(3));
+	EXPECT_THAT(fi.TotalSuger(), Eq(3));
+	EXPECT_THAT(fi.AddedSugar(), Eq(3));
+	EXPECT_THAT(fi.Erythritol(), Eq(3));
+	EXPECT_THAT(fi.Protein(), Eq(3));
+}
+
+TEST_F(FoodItemTest, OperatorTimes)
+{
+	Diet::FoodItem f = fi * 3;
+
+	EXPECT_THAT(f.Name(), Eq("Bacon"));
+	EXPECT_THAT(f.Calories(), Eq(3));
+	EXPECT_THAT(f.TotalFat(), Eq(3));
+	EXPECT_THAT(f.SaturatedFat(), Eq(3));
+	EXPECT_THAT(f.TransFat(), Eq(3));
+	EXPECT_THAT(f.PolyUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(f.MonoUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(f.Cholesterol(), Eq(3));
+	EXPECT_THAT(f.Sodium(), Eq(3));
+	EXPECT_THAT(f.TotalCarbohydrates(), Eq(3));
+	EXPECT_THAT(f.DietryFiber(), Eq(3));
+	EXPECT_THAT(f.TotalSuger(), Eq(3));
+	EXPECT_THAT(f.AddedSugar(), Eq(3));
+	EXPECT_THAT(f.Erythritol(), Eq(3));
+	EXPECT_THAT(f.Protein(), Eq(3));
+}
+
+TEST_F(FoodItemTest, OperatorEquals)
+{
+	Diet::FoodItem f;
+	RunNew(f, "FoodItemNewTest.txt");
+	RunNew(fi, "FoodItemNewTest.txt");
+
+	EXPECT_TRUE(fi == f);
+
+	EXPECT_THAT(f.Name(), Eq("Fries"));
+	EXPECT_THAT(f.Calories(), Eq(3));
+	EXPECT_THAT(f.TotalFat(), Eq(3));
+	EXPECT_THAT(f.SaturatedFat(), Eq(3));
+	EXPECT_THAT(f.TransFat(), Eq(3));
+	EXPECT_THAT(f.PolyUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(f.MonoUnsaturatedFat(), Eq(3));
+	EXPECT_THAT(f.Cholesterol(), Eq(3));
+	EXPECT_THAT(f.Sodium(), Eq(3));
+	EXPECT_THAT(f.TotalCarbohydrates(), Eq(3));
+	EXPECT_THAT(f.DietryFiber(), Eq(3));
+	EXPECT_THAT(f.TotalSuger(), Eq(3));
+	EXPECT_THAT(f.AddedSugar(), Eq(3));
+	EXPECT_THAT(f.Erythritol(), Eq(3));
+	EXPECT_THAT(f.Protein(), Eq(3));
+
+}
+
+
+TEST_F(FoodItemTest, OperatorInsertion)
+{
+	std::stringstream ss;
+	ss << fi;
+
+	std::string out = "Name: Bacon\n";
+	out += "Calories: 1.0\n";
+	out += "Total Fat: 1.0g\n";
+	out += "  Saturated Fat: 1.0g\n";
+	out += "  Trans Fat: 1.0g\n";
+	out += "  Polyunsaturated: 1.0g\n";
+	out += "  Monounsaturated: 1.0g\n";
+	out += "Cholesterol: 1.0mg\n";
+	out += "Sodium: 1.0mg\n";
+	out += "Total Carbohydrate: 1.0g\n";
+	out += "  Dietary Fibre: 1.0g\n";
+	out += "  Total Sugars: 1.0g\n";
+	out += "    Added Sugars: 1.0g\n";
+    out += "    Erythitol: 1.0g\n";
+	out += "Protein: 1.0g\n\n";
+
+	EXPECT_THAT(ss.str(), Eq(out));
+
+	EXPECT_THAT(fi.Name(), Eq("Bacon"));
+	EXPECT_THAT(fi.Calories(), Eq(1));
+	EXPECT_THAT(fi.TotalFat(), Eq(1));
+	EXPECT_THAT(fi.SaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.TransFat(), Eq(1));
+	EXPECT_THAT(fi.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.Cholesterol(), Eq(1));
+	EXPECT_THAT(fi.Sodium(), Eq(1));
+	EXPECT_THAT(fi.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(fi.DietryFiber(), Eq(1));
+	EXPECT_THAT(fi.TotalSuger(), Eq(1));
+	EXPECT_THAT(fi.AddedSugar(), Eq(1));
+	EXPECT_THAT(fi.Erythritol(), Eq(1));
+	EXPECT_THAT(fi.Protein(), Eq(1));
+}
+
+
+TEST_F(FoodItemTest, Serialize)
+{
+	std::string output = "Bacon 1 1 1 1 1 1 1 1 1 1 1 1 1 1";
+	std::string input = SerializeTest(fi);
+
+	EXPECT_THAT(input, Eq(output));
+
+	EXPECT_THAT(fi.Name(), Eq("Bacon"));
+	EXPECT_THAT(fi.Calories(), Eq(1));
+	EXPECT_THAT(fi.TotalFat(), Eq(1));
+	EXPECT_THAT(fi.SaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.TransFat(), Eq(1));
+	EXPECT_THAT(fi.PolyUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.MonoUnsaturatedFat(), Eq(1));
+	EXPECT_THAT(fi.Cholesterol(), Eq(1));
+	EXPECT_THAT(fi.Sodium(), Eq(1));
+	EXPECT_THAT(fi.TotalCarbohydrates(), Eq(1));
+	EXPECT_THAT(fi.DietryFiber(), Eq(1));
+	EXPECT_THAT(fi.TotalSuger(), Eq(1));
+	EXPECT_THAT(fi.AddedSugar(), Eq(1));
+	EXPECT_THAT(fi.Erythritol(), Eq(1));
+	EXPECT_THAT(fi.Protein(), Eq(1));
+}
+
+TEST_F(FoodItemTest, Deserialize)
+{
+	Diet::FoodItem f = DeserializeTest("deserializeTest.txt");
+
+	EXPECT_THAT(f.Name(), Eq("Mustard"));
+	EXPECT_THAT(f.Calories(), Eq(100));
+	EXPECT_THAT(f.TotalFat(), Eq(0));
+	EXPECT_THAT(f.SaturatedFat(), Eq(0));
+	EXPECT_THAT(f.TransFat(), Eq(0));
+	EXPECT_THAT(f.PolyUnsaturatedFat(), Eq(0));
+	EXPECT_THAT(f.MonoUnsaturatedFat(), Eq(0));
+	EXPECT_THAT(f.Cholesterol(), Eq(0));
+	EXPECT_THAT(f.Sodium(), Eq(0));
+	EXPECT_THAT(f.TotalCarbohydrates(), Eq(0));
+	EXPECT_THAT(f.DietryFiber(), Eq(0));
+	EXPECT_THAT(f.TotalSuger(), Eq(0));
+	EXPECT_THAT(f.AddedSugar(), Eq(0));
+	EXPECT_THAT(f.Erythritol(), Eq(0));
+	EXPECT_THAT(f.Protein(), Eq(1));
+}

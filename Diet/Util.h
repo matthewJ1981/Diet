@@ -11,12 +11,12 @@ namespace Util
 	* Common functionality of Input functions
 	 */
 	template <typename T>
-	T InputHelper(std::string msg, T selection)
+	T InputHelper(std::string msg, T selection, std::ostream& out = std::cout, std::istream& in = std::cin)
 	{
-		std::cout << msg;
-		std::string in = "";
-		std::getline(std::cin, in);
-		std::stringstream ss(in);
+		out << msg;
+		std::string input = "";
+		std::getline(in, input);
+		std::stringstream ss(input);
 		ss >> selection;
 
 		return selection;
@@ -31,13 +31,13 @@ namespace Util
 	 *	Perform some input validation for integer selections
 	 */
 	template <typename T>
-	T Input(std::string msg, T low, T high, bool convertEmptyInputToLow = true)
+	T Input(std::string msg, T low, T high, std::ostream& out = std::cout, std::istream& in = std::cin)
 	{
 		T selection(0);
 
 		do
 		{
-			selection = InputHelper(msg, selection);
+			selection = InputHelper(msg, selection, out, in);
 		} while (selection < low || selection > high);
 
 		return selection;

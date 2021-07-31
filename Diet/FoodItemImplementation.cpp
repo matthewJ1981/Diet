@@ -128,25 +128,25 @@ namespace Diet
 				>> protein;
 		}
 
-		void FoodItemImplementation::NutritionInfo::New()
+		void FoodItemImplementation::NutritionInfo::New(std::ostream& out, std::istream& in)
 		{
 			static constexpr float min = 0.0f;
 			static constexpr float max = 10000.0f;
 
-			calories = Util::Input("Calories: ", min, max);
-			fat.total = Util::Input("Total Fat: ", min, max);
-			fat.saturated = Util::Input("Saturated Fat: ", min, max);
-			fat.trans = Util::Input("Trans Fat: ", min, max);
-			fat.poly = Util::Input("Polyunsaturated Fat: ", min, max);
-			fat.mono = Util::Input("Monounsaturated Fat: ", min, max);
-			cholesterol = Util::Input("Cholesterol: ", min, max);
-			sodium = Util::Input("Sodium: ", min, max);
-			carbohydrates.total = Util::Input("Total Carbs: ", min, max);
-			carbohydrates.dietryFiber = Util::Input("Dietry Fiber: ", min, max);
-			carbohydrates.sugars.total = Util::Input("Total Sugars: ", min, max);
-			carbohydrates.sugars.added = Util::Input("Added Sugars ", min, max);
-			carbohydrates.erythritol = Util::Input("Eryhitol ", min, max);
-			protein = Util::Input("Protein: ", min, max);
+			calories = Util::Input("Calories: ", min, max, out, in);
+			fat.total = Util::Input("Total Fat: ", min, max, out, in);
+			fat.saturated = Util::Input("Saturated Fat: ", min, max, out, in);
+			fat.trans = Util::Input("Trans Fat: ", min, max, out, in);
+			fat.poly = Util::Input("Polyunsaturated Fat: ", min, max, out, in);
+			fat.mono = Util::Input("Monounsaturated Fat: ", min, max, out, in);
+			cholesterol = Util::Input("Cholesterol: ", min, max, out, in);
+			sodium = Util::Input("Sodium: ", min, max, out, in);
+			carbohydrates.total = Util::Input("Total Carbs: ", min, max, out, in);
+			carbohydrates.dietryFiber = Util::Input("Dietry Fiber: ", min, max, out, in);
+			carbohydrates.sugars.total = Util::Input("Total Sugars: ", min, max, out, in);
+			carbohydrates.sugars.added = Util::Input("Added Sugars ", min, max, out, in);
+			carbohydrates.erythritol = Util::Input("Eryhitol ", min, max, out, in);
+			protein = Util::Input("Protein: ", min, max, out, in);
 		}
 
 		FoodItemImplementation::FoodItemImplementation() = default;

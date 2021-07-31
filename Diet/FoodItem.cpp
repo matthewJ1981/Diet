@@ -140,7 +140,7 @@ namespace Diet
 	{
 		out << "Name of Food? ";
 		std::getline(in, impl->name);
-		impl->info.New();
+		impl->info.New(out, in);
 	}
 
 	std::ostream& operator << (std::ostream& out, const FoodItem& fi)

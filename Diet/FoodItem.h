@@ -46,7 +46,7 @@ namespace Diet
 
 		bool operator == (const FoodItem& rhs) const;
 
-		void New(std::ostream& out, std::istream& in);
+		void New(std::ostream& out = std::cout, std::istream& in = std::cin);
 		void Serialize(std::ofstream& out) const;
 		void Deserialize(std::ifstream& in);
 
