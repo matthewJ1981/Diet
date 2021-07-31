@@ -47,7 +47,6 @@ namespace Diet
 		 */
 		static void Print(std::ostream& out, const FoodItem& ni);
 		static void FormatHelper(std::ostream& out, std::string col1, float col2);
-		static float Percentage(float amount, float max);
 	
 		/**
 		 *	File IO
@@ -57,8 +56,6 @@ namespace Diet
 		static void Deserialize();
 		static void WriteTotal();
 		static void ReadTotal();
-	/*	static void Write(std::string, bool append = false);
-		static void Read(std::string);*/
 		static void ClearConsumedFile();
 
 		/**

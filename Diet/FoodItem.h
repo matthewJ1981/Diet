@@ -49,6 +49,7 @@ namespace Diet
 		void New(std::ostream& out = std::cout, std::istream& in = std::cin);
 		void Serialize(std::ofstream& out) const;
 		void Deserialize(std::ifstream& in);
+		void Clear();
 
 		friend std::ostream& operator << (std::ostream& out, const FoodItem& fi);
 

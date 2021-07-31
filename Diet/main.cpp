@@ -1,4 +1,4 @@
-#define TESTING 1
+//#define TESTING 1
 
 #ifndef TESTING
 
@@ -12,7 +12,6 @@
 
 int main()
 {
-	//Diet::FoodItem f;
 	Diet::DietApp::Go();
 	return 0;
 }

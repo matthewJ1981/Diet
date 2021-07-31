@@ -70,7 +70,7 @@ namespace Diet
 			while (prevRunDate != currRunDate)
 			{
 				WriteTotal();
-				total = Diet::FoodItem();
+				total.Clear();
 				prevRunDate = prevRunDate + date_duration(1);
 			}
 			
@@ -250,7 +250,7 @@ namespace Diet
 				break;
 
 			std::cout << d << "\n";
-			Print(std::cout, f);
+			std::cout << f << "\n";
 		}
 	}
 
@@ -333,13 +333,13 @@ namespace Diet
 
 	std::vector<std::pair<FoodItem, float>> DietApp::consumed = { };
 	std::vector<FoodItem> DietApp::favorites = {};
-	FoodItem DietApp::total = {};
+	FoodItem DietApp::total = {"Total"};
 
 	float DietApp::calorieMax = 2000.0f;
-	const std::string DietApp::consumedFile = "consumed.txt";
-	const std::string DietApp::favoritesFile = "favorites.txt";
-	const std::string DietApp::configFile = "config.txt";
-	const std::string DietApp::totalsFile = "totals.txt";
+	const std::string DietApp::consumedFile = "Data/consumed.txt";
+	const std::string DietApp::favoritesFile = "Data/favorites.txt";
+	const std::string DietApp::configFile = "Data/config.txt";
+	const std::string DietApp::totalsFile = "Data/totals.txt";
 	boost::gregorian::date DietApp::prevRunDate(not_a_date_time);
 	boost::gregorian::date DietApp::currRunDate(not_a_date_time);
 	_int64 DietApp::startHour = 0;

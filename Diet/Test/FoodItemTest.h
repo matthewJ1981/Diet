@@ -12,7 +12,7 @@ protected:
 		RunNew(fi);
 	}
 
-	void RunNew(Diet::FoodItem& f, std::string inFile = "FoodItemNewDriver.txt", std::string outFile = "FoodItemTestOut.txt")
+	void RunNew(Diet::FoodItem& f, std::string inFile = "Test/FoodItemNewDriver.txt", std::string outFile = "Test/FoodItemTestOut.txt")
 	{
 		std::ofstream out(outFile);
 		std::ifstream in(inFile);
@@ -24,10 +24,10 @@ protected:
 
 	std::string SerializeTest(Diet::FoodItem f)
 	{
-		std::ofstream out("serializeTest.txt");
+		std::ofstream out("Test/serializeTest.txt");
 		f.Serialize(out);
 		out.close();
-		std::ifstream in("serializeTest.txt");
+		std::ifstream in("Test/serializeTest.txt");
 		if (!in)
 			abort();
 		std::string input;

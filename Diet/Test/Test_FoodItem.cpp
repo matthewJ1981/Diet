@@ -89,7 +89,7 @@ TEST_F(FoodItemTest, CopyAssignment)
 
 TEST_F(FoodItemTest, New)
 {
-	RunNew(fi, "FoodItemNewTest.txt");
+	RunNew(fi, "Test/FoodItemNewTest.txt");
 
 	EXPECT_THAT(fi.Name(), Eq("Fries"));
 	EXPECT_THAT(fi.Calories(), Eq(3));
@@ -195,8 +195,8 @@ TEST_F(FoodItemTest, OperatorTimes)
 TEST_F(FoodItemTest, OperatorEquals)
 {
 	Diet::FoodItem f;
-	RunNew(f, "FoodItemNewTest.txt");
-	RunNew(fi, "FoodItemNewTest.txt");
+	RunNew(f, "Test/FoodItemNewTest.txt");
+	RunNew(fi, "Test/FoodItemNewTest.txt");
 
 	EXPECT_TRUE(fi == f);
 

@@ -165,4 +165,8 @@ namespace Diet
 		in >> impl->name;
 		impl->info.Deserialize(in);
 	}
+	void FoodItem::Clear()
+	{
+		impl->info *= 0;
+	}
 }
