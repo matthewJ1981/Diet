@@ -19,52 +19,59 @@ const date DietAppTest::currRunDateDef = date(not_a_date_time);
 
 TEST_F(DietAppTest, Go)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
 
 TEST_F(DietAppTest, Init)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
 TEST_F(DietAppTest, Reset)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	DietAppImplementation::Reset();
+	EXPECT_THAT(DietAppImplementation::calorieMax, Eq(calorieMaxDef));
+	EXPECT_THAT(DietAppImplementation::consumed, Eq(consumedDef));
+	EXPECT_THAT(DietAppImplementation::favorites, Eq(favoritesDef));
+	EXPECT_THAT(DietAppImplementation::total, Eq(totalDef));
+	EXPECT_THAT(DietAppImplementation::prevRunDate, Eq(prevRunDateDef));
+	EXPECT_THAT(DietAppImplementation::currRunDate, Eq(currRunDateDef));
+	EXPECT_THAT(DietAppImplementation::startHour, Eq(startHourDef));
 }
 TEST_F(DietAppTest, ConsumeFood)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
 TEST_F(DietAppTest, GetNewFood)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
 TEST_F(DietAppTest, GetFromFav)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
 
 TEST_F(DietAppTest, Print)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
+
 TEST_F(DietAppTest, FormatHelper)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	GTEST_SKIP();
 }
 
 TEST_F(DietAppTest, Serialize)
 {
-	FAIL();
-	//EXPECT_THAT(0, Eq(0));
+	DietAppImplementation::Serialize();
+	EXPECT_THAT(DietAppImplementation::calorieMax, Eq(calorieMaxDef));
+	EXPECT_THAT(DietAppImplementation::consumed, Eq(consumedDef));
+	EXPECT_THAT(DietAppImplementation::favorites, Eq(favoritesDef));
+	EXPECT_THAT(DietAppImplementation::total, Eq(totalDef));
+	EXPECT_THAT(DietAppImplementation::prevRunDate, Eq(prevRunDateDef));
+	EXPECT_THAT(DietAppImplementation::currRunDate, Eq(currRunDateDef));
+	EXPECT_THAT(DietAppImplementation::startHour, Eq(startHourDef));
 }
+
 TEST_F(DietAppTest, Deserialize)
 {
 	DietAppImplementation::consumed.push_back({ {"Test"}, 2 });

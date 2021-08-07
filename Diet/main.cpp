@@ -1,4 +1,4 @@
-#define TESTING 1
+//#define TESTING 1
 
 #ifndef TESTING
 
@@ -6,9 +6,6 @@
 #include "DietApp.h"
 #include <sstream>
 #include "Util.h"
-
-#include "Fooditem.h"
-
 
 int main()
 {
